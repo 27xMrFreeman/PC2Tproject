@@ -1,13 +1,24 @@
+import java.util.HashMap;
 public abstract class Movie {
     String name, director, scoreComment;
     int releaseDate, score;
+    HashMap<String, Movie> Movies = new HashMap<>();
 
+    public Movie(){
+        this.name = "";
+        this.director = "";
+        this.scoreComment = "";
+        this.releaseDate = 0;
+        this.score = 0;
+
+    }
     public Movie(String name, String director, String scoreComment, int releaseDate, int score) {
         this.name = name;
         this.director = director;
         this.scoreComment = scoreComment;
         this.releaseDate = releaseDate;
         this.score = score;
+
     }
 
     public void setDirector(String director) {
@@ -35,6 +46,7 @@ public abstract class Movie {
     abstract void addMovie();
     abstract void editMovie();
     abstract void deleteMovie();
+    abstract void printMovie();
 }
 
 

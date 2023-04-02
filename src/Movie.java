@@ -41,12 +41,30 @@ public abstract class Movie {
         this.scoreComment = scoreComment;
     }
 
-    //chybi hashmap hercu / animatoru
+    public String getName(){
+        return name;
+    }
+    public String getDirector() {
+        return director;
+    }
+    public int getReleaseDate() {
+        return releaseDate;
+    }
+    public int getScore() {
+        return score;
+    }
+    public String getScoreComment() {
+        return scoreComment;
+    }
 
     abstract void addMovie();
     abstract void editMovie();
     abstract void deleteMovie();
     abstract void printMovie();
+    abstract String[] getAnimators();
+    abstract int getSuggestedAge();
+    abstract void setAnimators(String [] animators);
+    abstract void setSuggestedAge(int suggestedAge);
 }
 
 

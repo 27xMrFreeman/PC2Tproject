@@ -5,7 +5,7 @@ import java.io.*;
 
 public class AnimatedMovie extends Movie {
     int suggestedAge;
-   String animators [];
+    String animators [];
     Scanner sc = new Scanner(System.in);
 
     public AnimatedMovie(String name, String director, String animators[], String scoreComment, int releaseDate, int score, int suggestedAge){
@@ -28,6 +28,12 @@ public class AnimatedMovie extends Movie {
     public void setAnimators(String [] animators){
         this.animators = animators;
     }
+    public String[] getAnimators() {
+        return animators;
+    }
+    public int getSuggestedAge() {
+        return suggestedAge;
+    }
 
     void addMovie() {
         int i = 0;
@@ -46,10 +52,9 @@ public class AnimatedMovie extends Movie {
                 buffer[i] = animator;
                 i++;
             }
-           
+           animators = new String[i];
             System.arraycopy(buffer,0,animators,0,i);
             System.out.println(i);                        // jenom pro debug
-            //System.out.println(animators[0]);
             System.out.println(Arrays.toString(animators));  
 
 
@@ -69,14 +74,16 @@ public class AnimatedMovie extends Movie {
             case "n":
                 break;
         }
-        //AnimatedMovie anim = new AnimatedMovie(name, director, animators, scoreComment, releaseDate, score, suggestedAge);
         Movies.put(name, new AnimatedMovie(name, director, animators, scoreComment, releaseDate, score, suggestedAge));
     }
 
     void editMovie() {
         System.out.println("Zadejte jmeno filmu na upravu: \n");
         String name = sc.nextLine();
+        String new_name = name;
         boolean flag = true;
+        int i = 0;
+        String buffer [] = new String [100];
         while (flag == true) {
         System.out.println("Zadejte co si prejete upravit: \n 1: Nazev\n 2: Reziser\n 3: Rok vydani\n 4: Seznam animatoru\n 5: Doporuceny vek\n 6: Konec editace\n");
         int ans;
@@ -84,37 +91,38 @@ public class AnimatedMovie extends Movie {
         switch (ans = sc.nextInt()) {
             case 1:
                 System.out.println("Zadejte nove jmeno filmu: \n");
-                String new_name = sc.nextLine();
-                Movies.get(name).setName(new_name);
+                new_name = sc.next();
+                Movies.remove(name);
+                Movies.put(new_name, new AnimatedMovie(new_name, director, animators, scoreComment, releaseDate, score, suggestedAge));
                 break;
             case 2:
                 System.out.println("Zadejte nove jmeno rezisera: \n");
-                director = sc.nextLine();
-                Movies.get(name).setDirector(director);
+                director = sc.next();
+                Movies.get(new_name).setDirector(director);
                 break;
             case 3:
                 System.out.println("Zadejte novy rok vydani: \n");
                 releaseDate = sc.nextInt();
-                Movies.get(name).setReleaseDate(releaseDate);
+                Movies.get(new_name).setReleaseDate(releaseDate);
                 break;
             case 4:
             System.out.println("Zadejte novy seznam animatoru: \n");
-                int i = 0;
-                String buffer [] = new String [100];
-                    while (sc.hasNext()){
-                        buffer[i] = sc.next();
-                        i++;
-                    }
-                String[] animators = new String [i];
-                    for (int n=0; n<i; n++){
-                        animators[n] = buffer[n];
-                    }
-                ((AnimatedMovie) Movies.get(name)).setAnimators(animators);
+            while (!sc.hasNext("stop")){           //Lidl while loop na debug
+                String animator = sc.next();
+                buffer[i] = animator;
+                i++;
+            }
+                animators = new String[i];
+                System.arraycopy(buffer,0,animators,0,i);
+                System.out.println(i);                        // jenom pro debug
+                System.out.println(Arrays.toString(animators));  
+
+                (Movies.get(new_name)).setAnimators(animators);
                 break;
             case 5:
-                System.out.println("Zadejte nove jmeno: \n");
+                System.out.println("Zadejte novy doporuceny vek: \n");
                 suggestedAge = sc.nextInt();
-                ((AnimatedMovie) Movies.get(name)).setSuggestedAge(suggestedAge);
+                (Movies.get(new_name)).setSuggestedAge(suggestedAge);
                 break;
             case 6:
                 flag = false;
@@ -127,6 +135,8 @@ public class AnimatedMovie extends Movie {
         System.out.println("Zadejte jmeno filmu ktery chcete smazat: \n");
     }
     void printMovie(){
-        System.out.println(this.name + " " +  this.director + " " + this.releaseDate + " " + Arrays.toString(animators) + " " + this.suggestedAge);
+        System.out.println("Zadejte jmeno filmu pro vypsani: \n");
+        String key = sc.next();
+        System.out.println(Movies.get(key).getName() + " " +  Movies.get(key).getDirector() + " " + Movies.get(key).getReleaseDate() + " " + Arrays.toString(animators) + " " + Movies.get(key).getSuggestedAge());
     }
 }

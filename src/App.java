@@ -7,6 +7,5 @@ public class App {
         A.printMovie();
         A.editMovie();
         A.printMovie();
-
     }
 }

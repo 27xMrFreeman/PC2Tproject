@@ -61,6 +61,7 @@ public abstract class Movie {
     abstract void editMovie();
     abstract void deleteMovie();
     abstract void printMovie();
+    abstract void saveMovie();
     abstract String[] getAnimators();
     abstract int getSuggestedAge();
     abstract void setAnimators(String [] animators);

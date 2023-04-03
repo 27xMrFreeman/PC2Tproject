@@ -2,8 +2,9 @@ import java.util.Scanner;
 import java.util.Arrays;
 import java.lang.*;
 import java.io.*;
+import java.io.Serializable;
 
-public class AnimatedMovie extends Movie {
+public class AnimatedMovie extends Movie implements serializable {
     int suggestedAge;
     String animators [];
     Scanner sc = new Scanner(System.in);
@@ -130,7 +131,6 @@ public class AnimatedMovie extends Movie {
         }
         }
     }
-
     void deleteMovie () {
         System.out.println("Zadejte jmeno filmu ktery chcete smazat: \n");
     }
@@ -138,5 +138,8 @@ public class AnimatedMovie extends Movie {
         System.out.println("Zadejte jmeno filmu pro vypsani: \n");
         String key = sc.next();
         System.out.println(Movies.get(key).getName() + " " +  Movies.get(key).getDirector() + " " + Movies.get(key).getReleaseDate() + " " + Arrays.toString(animators) + " " + Movies.get(key).getSuggestedAge());
+    }
+    void saveMovie(){
+        
     }
 }

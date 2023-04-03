@@ -118,7 +118,7 @@ public class AnimatedMovie extends Movie {
     }
     void printMovie(){
         System.out.println("Zadejte jmeno filmu pro vypsani: ");
-        String name = sc.next();
+        String name = sc.nextLine();
         System.out.println("Jmeno: " + Movies.get(name).getName() + "\nReziser: " +  Movies.get(name).getDirector());
         System.out.println("Vydano: " + Movies.get(name).getReleaseDate() + "\nAnimatori: " + Arrays.toString(((AnimatedMovie)Movies.get(name)).getAnimatorsOrActors())); // mozna se zbavit loopem hranatych zavorek
         System.out.println("Doporuceny vek: " + ((AnimatedMovie) Movies.get(name)).getSuggestedAge() + "\nHodnoceni: " + Movies.get(name).getScore());

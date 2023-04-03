@@ -61,7 +61,6 @@ public abstract class Movie implements serializable {
     //abstract String[] getAnimatorsOrActors();
     //abstract int getSuggestedAge();
     
-    abstract void saveMovie();
     abstract void addMovie();
     abstract void editMovie();
     abstract void deleteMovie();

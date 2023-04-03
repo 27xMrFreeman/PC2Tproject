@@ -3,6 +3,8 @@ import java.util.Arrays;
 import java.lang.*;
 import java.io.*;
 import java.io.Serializable;
+import java.util.Set;
+import java.util.HashMap.size;
 
 public class AnimatedMovie extends Movie implements Serializable {
     int suggestedAge;
@@ -116,6 +118,8 @@ public class AnimatedMovie extends Movie implements Serializable {
     }
     void deleteMovie () {
         System.out.println("Zadejte jmeno filmu ktery chcete smazat: ");
+        String name = sc.nextLine();
+        Movies.remove(name);
     }
     void printMovie(){
         System.out.println("Zadejte jmeno filmu pro vypsani: ");
@@ -134,4 +138,14 @@ public class AnimatedMovie extends Movie implements Serializable {
         oos.writeObject(((AnimatedMovie)Movies.get(name)));
         fos.close();
     }
+    void printAllMovies(){
+        Set <String> names = Movies.keySet();
+		    for(String name:names) {
+                System.out.println("Jmeno: " + Movies.get(name).getName() + "\nReziser: " +  Movies.get(name).getDirector());
+                System.out.println("Vydano: " + Movies.get(name).getReleaseDate() + "\nAnimatori: " + Arrays.toString(((AnimatedMovie)Movies.get(name)).getAnimatorsOrActors())); // mozna se zbavit loopem hranatych zavorek
+                System.out.println("Doporuceny vek: " + ((AnimatedMovie) Movies.get(name)).getSuggestedAge() + "\nHodnoceni: " + Movies.get(name).getScore());
+                System.out.println("Komentar: " + Movies.get(name).getScoreComment() + "\n");
+        }
+    }
+  
 }

@@ -1,5 +1,7 @@
 import java.util.Scanner;
 import java.io.Serializable;
+import java.util.Set;
+import java.util.Map;
 
 public class App implements Serializable {
     public static void main(String[] args) throws Exception {
@@ -10,7 +12,7 @@ public class App implements Serializable {
         Scanner sc = new Scanner(System.in);
 
         while(flag ==true){
-        System.out.println("1: add, 2: edit, 3: print, 4: ulozit do souboru , 5: konec");
+        System.out.println("1: add 2: edit 3: print 4: ulozit do souboru 5: smazat film 6: vypsat vsechny filmy 7: vypsat podle animatora 8: konec");
         ans = sc.nextInt();
         
         
@@ -28,6 +30,12 @@ public class App implements Serializable {
                 A.saveMovie();
                 break;
             case 5:
+                A.deleteMovie();
+                break;
+            case 6:
+                A.printAllMovies();
+                break;
+            case 7:
                 flag = false;
                 break;
             }

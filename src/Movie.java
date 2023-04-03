@@ -2,6 +2,8 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.io.Serializable;
+import java.util.Set;
+import java.util.Map;
 public abstract class Movie implements Serializable {
     String name, director, scoreComment;
     int releaseDate, score;
@@ -66,7 +68,9 @@ public abstract class Movie implements Serializable {
     abstract void editMovie();
     abstract void deleteMovie();
     abstract void printMovie();
+    abstract void printAllMovies();
     abstract void saveMovie();
+    abstract void printAnimatorOrActor();
     abstract void setAnimators(String [] animators);
     abstract void setSuggestedAge(int suggestedAge);
 }

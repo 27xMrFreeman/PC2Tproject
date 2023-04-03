@@ -133,7 +133,12 @@ public class AnimatedMovie extends Movie implements serializable {
         System.out.println("Doporuceny vek: " + Movies.get(key).getSuggestedAge() + "\nHodnoceni: " + Movies.get(key).getScore());
         System.out.println("Komentar: " + Movies.get(key).getScoreComment());
     }
-    void saveMovie(){
-        
+    void saveMovie(AnimatedMovie M){
+        System.out.println("Zadejte jmeno filmu pro vypsani: ");
+        String name = sc.next();
+        FileOutputStream fos = new FileOutputStream(name);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(M);
+        fos.close();
     }
 }

@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class App {
+public class App implements serializable {
     public static void main(String[] args) throws Exception {
         System.out.println();
         AnimatedMovie A = new AnimatedMovie();
@@ -9,7 +9,7 @@ public class App {
         Scanner sc = new Scanner(System.in);
 
         while(flag ==true){
-        System.out.println("1: add, 2: edit, 3: print, 4: konec");
+        System.out.println("1: add, 2: edit, 3: print, 4: ulozit do souboru , 5: konec");
         ans = sc.nextInt();
         
         switch(ans){
@@ -23,6 +23,9 @@ public class App {
                 A.printMovie();
                 break;
             case 4:
+                A.saveMovie(A);
+                break;
+            case 5:
                 flag = false;
             }
        

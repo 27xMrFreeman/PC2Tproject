@@ -1,5 +1,7 @@
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
-public abstract class Movie {
+public abstract class Movie implements serializable {
     String name, director, scoreComment;
     int releaseDate, score;
     HashMap<String, Movie> Movies = new HashMap<>();
@@ -57,11 +59,11 @@ public abstract class Movie {
         return scoreComment;
     }
 
+    abstract void saveMovie();
     abstract void addMovie();
     abstract void editMovie();
     abstract void deleteMovie();
     abstract void printMovie();
-    abstract void saveMovie();
     abstract String[] getAnimators();
     abstract int getSuggestedAge();
     abstract void setAnimators(String [] animators);

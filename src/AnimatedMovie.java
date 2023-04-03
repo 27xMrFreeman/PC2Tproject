@@ -4,7 +4,7 @@ import java.lang.*;
 import java.io.*;
 import java.io.Serializable;
 
-public class AnimatedMovie extends Movie {
+public class AnimatedMovie extends Movie implements Serializable {
     int suggestedAge;
     String animators [];
     Scanner sc = new Scanner(System.in);
@@ -109,6 +109,7 @@ public class AnimatedMovie extends Movie {
                 break;
             case 6:
                 flag = false;
+                sc.nextLine();
                 break;
         }
         }
@@ -119,17 +120,18 @@ public class AnimatedMovie extends Movie {
     void printMovie(){
         System.out.println("Zadejte jmeno filmu pro vypsani: ");
         String name = sc.nextLine();
+        // try catch chybi - NullPointerException
         System.out.println("Jmeno: " + Movies.get(name).getName() + "\nReziser: " +  Movies.get(name).getDirector());
         System.out.println("Vydano: " + Movies.get(name).getReleaseDate() + "\nAnimatori: " + Arrays.toString(((AnimatedMovie)Movies.get(name)).getAnimatorsOrActors())); // mozna se zbavit loopem hranatych zavorek
         System.out.println("Doporuceny vek: " + ((AnimatedMovie) Movies.get(name)).getSuggestedAge() + "\nHodnoceni: " + Movies.get(name).getScore());
         System.out.println("Komentar: " + Movies.get(name).getScoreComment());
     }
-    void saveMovie(AnimatedMovie M){
+    void saveMovie(){
         System.out.println("Zadejte jmeno filmu pro vypsani: ");
-        String name = sc.next();
+        String name = sc.nextLine();
         FileOutputStream fos = new FileOutputStream(name);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(M);
+        oos.writeObject(((AnimatedMovie)Movies.get(name)));
         fos.close();
     }
 }

@@ -1,7 +1,8 @@
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
-public abstract class Movie implements serializable {
+import java.io.Serializable;
+public abstract class Movie implements Serializable {
     String name, director, scoreComment;
     int releaseDate, score;
     HashMap<String, Movie> Movies = new HashMap<>();

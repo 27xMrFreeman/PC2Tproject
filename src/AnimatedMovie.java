@@ -35,41 +35,32 @@ public class AnimatedMovie extends Movie implements serializable {
     public int getSuggestedAge() {
         return suggestedAge;
     }
-
+    public String getComment() {
+        return scoreComment;
+    }
     void addMovie() {
         int i = 0;
-        String buffer [] = new String [100];
-        System.out.println("Zadejte jmeno filmu \n");
-        name = sc.nextLine();
-        System.out.println("Zadejte jmeno rezisera \n");
-        director = sc.nextLine();
-        System.out.println("Zadejte rok vydani \n");
-        releaseDate = sc.nextInt();
-        System.out.println("Zadejte seznam animatoru, stop pro konec\n"); 
-
-         
-             while (!sc.hasNext("stop")){           //Lidl while loop na debug
-                String animator = sc.next();
-                buffer[i] = animator;
-                i++;
-            }
-           animators = new String[i];
-            System.arraycopy(buffer,0,animators,0,i);
-            System.out.println(i);                        // jenom pro debug
-            System.out.println(Arrays.toString(animators));  
-
-
-        
-        sc.next();
-        System.out.println("Zadejte doporuceny vek \n");
-        suggestedAge = sc.nextInt();
-        System.out.println("Zadejte bodove hodnoceni (1-10) \n");
-        score = sc.nextInt();
-        System.out.println("Prejete si pridat komentar k hodnoceni? (y/n) \n");
-        sc.next();
+        System.out.println("Zadejte jmeno filmu");
+            name = sc.nextLine();
+        System.out.println("Zadejte jmeno rezisera");
+            director = sc.nextLine();
+        System.out.println("Zadejte rok vydani");
+            releaseDate = sc.nextInt();
+            sc.nextLine();
+        System.out.println("Zadejte seznam animatoru, oddelene carkou a mezerou"); 
+            String buffer = sc.nextLine();
+            animators = buffer.split(", ");
+            System.out.println(Arrays.toString(animators));
+        System.out.println("Zadejte doporuceny vek ");
+            suggestedAge = sc.nextInt();
+        System.out.println("Zadejte bodove hodnoceni (1-10) ");
+            score = sc.nextInt();
+            sc.nextLine();
+        System.out.println("Prejete si pridat komentar k hodnoceni? (y/n) ");
         String ans = sc.nextLine();
         switch(ans) { 
             case "y":
+                System.out.println("Napiste komentar");
                 scoreComment = sc.nextLine();
                 break;
             case "n":
@@ -79,35 +70,35 @@ public class AnimatedMovie extends Movie implements serializable {
     }
 
     void editMovie() {
-        System.out.println("Zadejte jmeno filmu na upravu: \n");
+        System.out.println("Zadejte jmeno filmu na upravu: ");
         String name = sc.nextLine();
         String new_name = name;
         boolean flag = true;
         int i = 0;
         String buffer [] = new String [100];
         while (flag == true) {
-        System.out.println("Zadejte co si prejete upravit: \n 1: Nazev\n 2: Reziser\n 3: Rok vydani\n 4: Seznam animatoru\n 5: Doporuceny vek\n 6: Konec editace\n");
+        System.out.println("Zadejte co si prejete upravit:  1: Nazev 2: Reziser 3: Rok vydani 4: Seznam animatoru 5: Doporuceny vek 6: Konec editace");
         int ans;
         //sc.next();
         switch (ans = sc.nextInt()) {
             case 1:
-                System.out.println("Zadejte nove jmeno filmu: \n");
+                System.out.println("Zadejte nove jmeno filmu: ");
                 new_name = sc.next();
                 Movies.remove(name);
                 Movies.put(new_name, new AnimatedMovie(new_name, director, animators, scoreComment, releaseDate, score, suggestedAge));
                 break;
             case 2:
-                System.out.println("Zadejte nove jmeno rezisera: \n");
+                System.out.println("Zadejte nove jmeno rezisera: ");
                 director = sc.next();
                 Movies.get(new_name).setDirector(director);
                 break;
             case 3:
-                System.out.println("Zadejte novy rok vydani: \n");
+                System.out.println("Zadejte novy rok vydani: ");
                 releaseDate = sc.nextInt();
                 Movies.get(new_name).setReleaseDate(releaseDate);
                 break;
             case 4:
-            System.out.println("Zadejte novy seznam animatoru: \n");
+            System.out.println("Zadejte novy seznam animatoru: ");
             while (!sc.hasNext("stop")){           //Lidl while loop na debug
                 String animator = sc.next();
                 buffer[i] = animator;
@@ -121,7 +112,7 @@ public class AnimatedMovie extends Movie implements serializable {
                 (Movies.get(new_name)).setAnimators(animators);
                 break;
             case 5:
-                System.out.println("Zadejte novy doporuceny vek: \n");
+                System.out.println("Zadejte novy doporuceny vek: ");
                 suggestedAge = sc.nextInt();
                 (Movies.get(new_name)).setSuggestedAge(suggestedAge);
                 break;
@@ -132,12 +123,15 @@ public class AnimatedMovie extends Movie implements serializable {
         }
     }
     void deleteMovie () {
-        System.out.println("Zadejte jmeno filmu ktery chcete smazat: \n");
+        System.out.println("Zadejte jmeno filmu ktery chcete smazat: ");
     }
     void printMovie(){
-        System.out.println("Zadejte jmeno filmu pro vypsani: \n");
+        System.out.println("Zadejte jmeno filmu pro vypsani: ");
         String key = sc.next();
-        System.out.println(Movies.get(key).getName() + " " +  Movies.get(key).getDirector() + " " + Movies.get(key).getReleaseDate() + " " + Arrays.toString(animators) + " " + Movies.get(key).getSuggestedAge());
+        System.out.println("Jmeno: " + Movies.get(key).getName() + "\nReziser: " +  Movies.get(key).getDirector());
+        System.out.println("Vydano: " + Movies.get(key).getReleaseDate() + "\nAnimatori: " + Arrays.toString(animators)); // mozna se zbavit loopem hranatych zavorek
+        System.out.println("Doporuceny vek: " + Movies.get(key).getSuggestedAge() + "\nHodnoceni: " + Movies.get(key).getScore());
+        System.out.println("Komentar: " + Movies.get(key).getScoreComment());
     }
     void saveMovie(){
         

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.io.Serializable;
 import java.util.Set;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Iterator;;
 public abstract class Movie implements Serializable {
     String name, director, scoreComment;
     int releaseDate, score;

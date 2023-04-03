@@ -2,6 +2,8 @@ import java.util.Scanner;
 import java.io.Serializable;
 import java.util.Set;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Iterator;
 
 public class App implements Serializable {
     public static void main(String[] args) throws Exception {
@@ -36,6 +38,9 @@ public class App implements Serializable {
                 A.printAllMovies();
                 break;
             case 7:
+                A.printAnimatorOrActor();
+                break;
+            case 8:
                 flag = false;
                 break;
             }

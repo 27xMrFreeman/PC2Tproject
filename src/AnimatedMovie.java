@@ -5,6 +5,9 @@ import java.io.*;
 import java.io.Serializable;
 import java.util.Set;
 import java.util.HashMap.size;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class AnimatedMovie extends Movie implements Serializable {
     int suggestedAge;
@@ -147,5 +150,8 @@ public class AnimatedMovie extends Movie implements Serializable {
                 System.out.println("Komentar: " + Movies.get(name).getScoreComment() + "\n");
         }
     }
-  
+    void printAnimatorOrActor(){ //udelat hashmap pro key animators a hodnotu nazev filmu
+        System.out.println("Zadejte jmeno animatora pro vypsani: ");
+        String name = sc.nextLine(); 
+    }
 }

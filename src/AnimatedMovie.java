@@ -19,7 +19,7 @@ public class AnimatedMovie extends Movie {
         this.scoreComment = "";
         this.releaseDate = 0;
         this.score = 0;
-        this.animators= animators;
+        //this.animators= animators;
     }
 
     public void setSuggestedAge(int suggestedAge) {

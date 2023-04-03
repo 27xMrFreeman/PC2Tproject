@@ -56,14 +56,14 @@ public abstract class Movie {
     public String getScoreComment() {
         return scoreComment;
     }
-
+    //abstract String[] getAnimatorsOrActors();
+    //abstract int getSuggestedAge();
+    
     abstract void addMovie();
     abstract void editMovie();
     abstract void deleteMovie();
     abstract void printMovie();
     abstract void saveMovie();
-    abstract String[] getAnimators();
-    abstract int getSuggestedAge();
     abstract void setAnimators(String [] animators);
     abstract void setSuggestedAge(int suggestedAge);
 }

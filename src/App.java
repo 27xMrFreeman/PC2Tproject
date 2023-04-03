@@ -11,6 +11,7 @@ public class App {
         while(flag ==true){
         System.out.println("1: add, 2: edit, 3: print, 4: konec");
         ans = sc.nextInt();
+        sc.nextLine();
         
         switch(ans){
             case 1:
@@ -24,6 +25,7 @@ public class App {
                 break;
             case 4:
                 flag = false;
+                break;
             }
        
         }

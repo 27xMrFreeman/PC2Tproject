@@ -4,7 +4,7 @@ import java.lang.*;
 import java.io.*;
 import java.io.Serializable;
 
-public class AnimatedMovie extends Movie implements serializable {
+public class AnimatedMovie extends Movie {
     int suggestedAge;
     String animators [];
     Scanner sc = new Scanner(System.in);
@@ -29,14 +29,14 @@ public class AnimatedMovie extends Movie implements serializable {
     public void setAnimators(String [] animators){
         this.animators = animators;
     }
-    public String[] getAnimators() {
-        return animators;
-    }
     public int getSuggestedAge() {
         return suggestedAge;
     }
     public String getComment() {
         return scoreComment;
+    }
+    public String[] getAnimatorsOrActors() {
+        return animators;
     }
     void addMovie() {
         int i = 0;
@@ -75,7 +75,6 @@ public class AnimatedMovie extends Movie implements serializable {
         String new_name = name;
         boolean flag = true;
         int i = 0;
-        String buffer [] = new String [100];
         while (flag == true) {
         System.out.println("Zadejte co si prejete upravit:  1: Nazev 2: Reziser 3: Rok vydani 4: Seznam animatoru 5: Doporuceny vek 6: Konec editace");
         int ans;
@@ -98,17 +97,9 @@ public class AnimatedMovie extends Movie implements serializable {
                 Movies.get(new_name).setReleaseDate(releaseDate);
                 break;
             case 4:
-            System.out.println("Zadejte novy seznam animatoru: ");
-            while (!sc.hasNext("stop")){           //Lidl while loop na debug
-                String animator = sc.next();
-                buffer[i] = animator;
-                i++;
-            }
-                animators = new String[i];
-                System.arraycopy(buffer,0,animators,0,i);
-                System.out.println(i);                        // jenom pro debug
-                System.out.println(Arrays.toString(animators));  
-
+                System.out.println("Zadejte novy seznam animatoru: ");
+                String buffer = sc.nextLine();
+                animators = buffer.split(", ");
                 (Movies.get(new_name)).setAnimators(animators);
                 break;
             case 5:
@@ -127,11 +118,11 @@ public class AnimatedMovie extends Movie implements serializable {
     }
     void printMovie(){
         System.out.println("Zadejte jmeno filmu pro vypsani: ");
-        String key = sc.next();
-        System.out.println("Jmeno: " + Movies.get(key).getName() + "\nReziser: " +  Movies.get(key).getDirector());
-        System.out.println("Vydano: " + Movies.get(key).getReleaseDate() + "\nAnimatori: " + Arrays.toString(animators)); // mozna se zbavit loopem hranatych zavorek
-        System.out.println("Doporuceny vek: " + Movies.get(key).getSuggestedAge() + "\nHodnoceni: " + Movies.get(key).getScore());
-        System.out.println("Komentar: " + Movies.get(key).getScoreComment());
+        String name = sc.next();
+        System.out.println("Jmeno: " + Movies.get(name).getName() + "\nReziser: " +  Movies.get(name).getDirector());
+        System.out.println("Vydano: " + Movies.get(name).getReleaseDate() + "\nAnimatori: " + Arrays.toString(((AnimatedMovie)Movies.get(name)).getAnimatorsOrActors())); // mozna se zbavit loopem hranatych zavorek
+        System.out.println("Doporuceny vek: " + ((AnimatedMovie) Movies.get(name)).getSuggestedAge() + "\nHodnoceni: " + Movies.get(name).getScore());
+        System.out.println("Komentar: " + Movies.get(name).getScoreComment());
     }
     void saveMovie(){
         

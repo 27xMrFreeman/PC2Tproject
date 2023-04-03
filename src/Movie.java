@@ -58,14 +58,15 @@ public abstract class Movie implements serializable {
     public String getScoreComment() {
         return scoreComment;
     }
-
+    //abstract String[] getAnimatorsOrActors();
+    //abstract int getSuggestedAge();
+    
     abstract void saveMovie();
     abstract void addMovie();
     abstract void editMovie();
     abstract void deleteMovie();
     abstract void printMovie();
-    abstract String[] getAnimators();
-    abstract int getSuggestedAge();
+    abstract void saveMovie();
     abstract void setAnimators(String [] animators);
     abstract void setSuggestedAge(int suggestedAge);
 }

@@ -11,6 +11,7 @@ public class App implements serializable {
         while(flag ==true){
         System.out.println("1: add, 2: edit, 3: print, 4: ulozit do souboru , 5: konec");
         ans = sc.nextInt();
+        //sc.nextLine();
         
         switch(ans){
             case 1:
@@ -27,6 +28,7 @@ public class App implements serializable {
                 break;
             case 5:
                 flag = false;
+                break;
             }
        
         }

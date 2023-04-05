@@ -1,25 +1,27 @@
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.Serializable;
 import java.util.Set;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Iterator;;
+import java.util.Iterator;
+import java.util.List;;
 public abstract class Movie implements Serializable {
-    String name, director, scoreComment;
-    int releaseDate, score;
+    String name, director;
+    List<String> scoreComment = new ArrayList<String>();
+    int releaseDate;
+    List<Integer> score = new ArrayList<Integer>();
     HashMap<String, Movie> Movies = new HashMap<>();
 
     public Movie(){
         this.name = "";
         this.director = "";
-        this.scoreComment = "";
         this.releaseDate = 0;
-        this.score = 0;
 
     }
-    public Movie(String name, String director, String scoreComment, int releaseDate, int score) {
+    public Movie(String name, String director, int releaseDate) {
         this.name = name;
         this.director = director;
         this.scoreComment = scoreComment;
@@ -40,12 +42,12 @@ public abstract class Movie implements Serializable {
         this.releaseDate = releaseDate;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setScore(int score, int scoreIndex) {
+        this.score.set(scoreIndex, score);
     }
 
-    public void setScoreComment(String scoreComment) {
-        this.scoreComment = scoreComment;
+    public void setScoreComment(String scoreComment, int scoreIndex) {
+        this.scoreComment.set(scoreIndex, scoreComment);
     }
 
     public String getName(){
@@ -57,11 +59,17 @@ public abstract class Movie implements Serializable {
     public int getReleaseDate() {
         return releaseDate;
     }
-    public int getScore() {
+    public List<Integer> getScoreList() {
         return score;
     }
-    public String getScoreComment() {
+    public int getScore(int j) {
+        return score.get(j);
+    }
+    public List<String> getScoreCommentList() {
         return scoreComment;
+    }
+    public String getScoreComment(int j) {
+        return scoreComment.get(j);
     }
     //abstract String[] getAnimatorsOrActors();
     //abstract int getSuggestedAge();
@@ -75,7 +83,29 @@ public abstract class Movie implements Serializable {
     abstract void printAnimatorOrActor();
     abstract void setAnimators(String [] animators);
     abstract void setSuggestedAge(int suggestedAge);
+
+    public void sortScore(String nameSort) {
+        int listSize = Movies.get(nameSort).getScoreList().size();
+        for (int i = 0; i < listSize; i++) {
+            for (int j = 0; j < listSize-1; j++) {
+                int scoreBuffer0 = Movies.get(name).getScore(j);
+                int scoreBuffer1 = Movies.get(name).getScore(j+1);
+                String scoreCommentBuffer0 = Movies.get(name).getScoreComment(j);
+                if(scoreBuffer0 < scoreBuffer1) {
+                    Movies.get(name).getScoreList().set(j, scoreBuffer1);
+                    Movies.get(name).getScoreList().set(j+1, scoreBuffer0);
+                    Movies.get(name).getScoreCommentList().set(j, getScoreComment(j));
+                    Movies.get(name).getScoreCommentList().set(j+1, scoreCommentBuffer0);
+                }
+
+            }
+        }
+
+    }
+    
 }
+    
+
 
 
 

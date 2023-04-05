@@ -14,9 +14,8 @@ public class App implements Serializable {
         Scanner sc = new Scanner(System.in);
 
         while(flag ==true){
-        System.out.println("1: add 2: edit 3: print 4: ulozit do souboru 5: smazat film 6: vypsat vsechny filmy 7: vypsat podle animatora 8: konec");
+        System.out.println("1: add 2: edit 3: pridat hodnoceni 4: print 5: ulozit do souboru 6: smazat film 7: vypsat vsechny filmy 8: vypsat podle animatora 9: konec");
         ans = sc.nextInt();
-        
         
         switch(ans){
             case 1:
@@ -26,21 +25,24 @@ public class App implements Serializable {
                 A.editMovie();
                 break;
             case 3:
+                A.addScore();
+                break;
+            case 4:
                 A.printMovie();
                 break;
-            case 4:                 // nefunguje
+            case 5:                 // nefunguje
                 A.saveMovie();
                 break;
-            case 5:
+            case 6:
                 A.deleteMovie();
                 break;
-            case 6:
+            case 7:
                 A.printAllMovies();
                 break;
-            case 7:
+            case 8:
                 A.printAnimatorOrActor();
                 break;
-            case 8:
+            case 9:
                 flag = false;
                 break;
             }

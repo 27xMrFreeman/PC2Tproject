@@ -14,7 +14,7 @@ public class App implements Serializable {
         Scanner sc = new Scanner(System.in);
 
         while(flag ==true){
-        System.out.println("1: add 2: edit 3: hodnoceni 4: ulozit do souboru 5: nacist ze souboru 6: smazat film 7: vypsat vsechny filmy 8: vypsat 1 film 9: vypsat podle animatora 10: konec");
+        System.out.println("1: add 2: edit 3: hodnoceni 4: ulozit do souboru 5: nacist ze souboru 6: smazat film 7: vypsat vsechny filmy 8: vypsat 1 film 9: konec");
         ans = sc.nextInt();
         
         switch(ans){

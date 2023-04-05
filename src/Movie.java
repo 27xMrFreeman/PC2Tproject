@@ -1,4 +1,5 @@
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,8 +8,12 @@ import java.util.Set;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Iterator;
+import java.util.Scanner;
+import java.io.*;
 import java.util.List;;
 public abstract class Movie implements Serializable {
+    private static final long serialVersionUID = 6529685098267757690L;
+    transient public Scanner sc = new Scanner(System.in);
     String name, director;
     List<String> scoreComment = new ArrayList<String>();
     int releaseDate;
@@ -71,19 +76,26 @@ public abstract class Movie implements Serializable {
     public String getScoreComment(int j) {
         return scoreComment.get(j);
     }
-    //abstract String[] getAnimatorsOrActors();
-    //abstract int getSuggestedAge();
     
     abstract void addMovie();
     abstract void editMovie();
-    abstract void deleteMovie();
-    abstract void printMovie();
-    abstract void printAllMovies();
+    abstract void printMovie(String name);
     abstract void saveMovie();
+    abstract void loadMovie() throws IOException, ClassNotFoundException, InvalidClassException;
     abstract void printAnimatorOrActor();
-    abstract void setAnimators(String [] animators);
-    abstract void setSuggestedAge(int suggestedAge);
 
+    void deleteMovie () {
+        System.out.println("Zadejte jmeno filmu ktery chcete smazat: ");
+        String name = sc.nextLine();
+        Movies.remove(name);
+    }
+    void printAllMovies(){
+        Set <String> names = Movies.keySet();
+		    for(String name:names) {
+                printMovie(name);
+                System.out.println("\n");
+        }
+    }
     public void sortScore(String nameSort) {
         int listSize = Movies.get(nameSort).getScoreList().size();
         for (int i = 0; i < listSize; i++) {
@@ -100,8 +112,8 @@ public abstract class Movie implements Serializable {
 
             }
         }
-
     }
+    
     
 }
     

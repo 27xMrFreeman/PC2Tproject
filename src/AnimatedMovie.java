@@ -2,7 +2,6 @@ import java.util.Scanner;
 import java.util.Arrays;
 import java.lang.*;
 import java.io.*;
-import java.io.Serializable;
 import java.util.Set;
 import java.util.Iterator;
 import java.util.List;
@@ -10,9 +9,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class AnimatedMovie extends Movie implements Serializable {
+    private static final long serialVersionUID = 6529685098267757690L;
     int suggestedAge;
     String animators [];
-    Scanner sc = new Scanner(System.in);
+    transient Scanner sc = new Scanner(System.in);
 
     public AnimatedMovie(String name, String director, String animators[], int releaseDate, int suggestedAge){
         super(name, director, releaseDate);
@@ -60,19 +60,6 @@ public class AnimatedMovie extends Movie implements Serializable {
         System.out.println("Zadejte doporuceny vek ");
             suggestedAge = sc.nextInt();
             sc.nextLine();
-        // System.out.println("Zadejte bodove hodnoceni (1-10) ");
-        //     score.add(sc.nextInt());
-        //     sc.nextLine();
-        // System.out.println("Prejete si pridat komentar k hodnoceni? (y/n) ");
-        // String ans = sc.nextLine();
-        // switch(ans) { 
-        //     case "y":
-        //         System.out.println("Napiste komentar");
-        //         scoreComment.add(sc.nextLine());
-        //         break;
-        //     case "n":
-        //         break;
-        // }
         Movies.put(name, new AnimatedMovie(name, director, animators, releaseDate, suggestedAge));
     }
 
@@ -85,7 +72,6 @@ public class AnimatedMovie extends Movie implements Serializable {
         while (flag == true) {
         System.out.println("Zadejte co si prejete upravit:  1: Nazev 2: Reziser 3: Rok vydani 4: Seznam animatoru 5: Doporuceny vek 6: Konec editace");
         int ans;
-        //sc.next();
         switch (ans = sc.nextInt()) {
             case 1:
                 System.out.println("Zadejte nove jmeno filmu: ");
@@ -107,12 +93,12 @@ public class AnimatedMovie extends Movie implements Serializable {
                 System.out.println("Zadejte novy seznam animatoru: ");
                 String buffer = sc.nextLine();
                 animators = buffer.split(", ");
-                (Movies.get(new_name)).setAnimators(animators);
+                ((AnimatedMovie) Movies.get(new_name)).setAnimators(animators);
                 break;
             case 5:
                 System.out.println("Zadejte novy doporuceny vek: ");
                 suggestedAge = sc.nextInt();
-                (Movies.get(new_name)).setSuggestedAge(suggestedAge);
+                ((AnimatedMovie) Movies.get(new_name)).setSuggestedAge(suggestedAge);
                 break;
             case 6:
                 flag = false;
@@ -121,39 +107,39 @@ public class AnimatedMovie extends Movie implements Serializable {
         }
         }
     }
-    void deleteMovie () {
-        System.out.println("Zadejte jmeno filmu ktery chcete smazat: ");
-        String name = sc.nextLine();
-        Movies.remove(name);
-    }
-    void printMovie(){
-        System.out.println("Zadejte jmeno filmu pro vypsani: ");
-        String name = sc.nextLine();
-        Movies.get(name).sortScore(name);
+    
+    void printMovie(String name){
         // try catch chybi - NullPointerException
         System.out.println("Jmeno: " + Movies.get(name).getName() + "\nReziser: " +  Movies.get(name).getDirector());
-        System.out.println("Vydano: " + Movies.get(name).getReleaseDate() + "\nAnimatori: " + Arrays.toString(((AnimatedMovie)Movies.get(name)).getAnimatorsOrActors())); // mozna se zbavit loopem hranatych zavorek
+        System.out.println("Vydano: " + Movies.get(name).getReleaseDate() + "\nAnimatori: " + Arrays.toString(((AnimatedMovie)Movies.get(name)).getAnimatorsOrActors()));
         System.out.println("Doporuceny vek: " + ((AnimatedMovie) Movies.get(name)).getSuggestedAge() + "\nHodnoceni: " + Movies.get(name).getScoreList());
-        System.out.println("Komentare: " + Movies.get(name).getScoreCommentList());
+        System.out.println("Komentar: " + Movies.get(name).getScoreCommentList());
     }
     void saveMovie(){
-        System.out.println("Zadejte jmeno filmu pro vypsani: ");
+        System.out.println("Zadejte jmeno filmu pro ulozeni: ");
         String name = sc.nextLine();
-        FileOutputStream fos = new FileOutputStream(name);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        try {
+        FileOutputStream fos = new FileOutputStream(name + ".data");
+        ObjectOutputStream oos;
+        oos = new ObjectOutputStream(fos);
         oos.writeObject(((AnimatedMovie)Movies.get(name)));
         fos.close();
-    }
-    void printAllMovies(){
-        Set <String> names = Movies.keySet();
-		    for(String name:names) {
-                System.out.println("Jmeno: " + Movies.get(name).getName() + "\nReziser: " +  Movies.get(name).getDirector());
-                System.out.println("Vydano: " + Movies.get(name).getReleaseDate() + "\nAnimatori: " + Arrays.toString(((AnimatedMovie)Movies.get(name)).getAnimatorsOrActors())); // mozna se zbavit loopem hranatych zavorek
-                System.out.println("Doporuceny vek: " + ((AnimatedMovie) Movies.get(name)).getSuggestedAge() + "\nHodnoceni: "+ Movies.get(name).getScoreList());
-                System.out.println("Komentare: " + Movies.get(name).getScoreCommentList() + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-    void printAnimatorOrActor(){ //udelat hashmap pro key animators a hodnotu nazev filmu
+
+    public void loadMovie() throws IOException, ClassNotFoundException{
+        System.out.println("Zadejte jmeno filmu pro nacteni: ");
+        String name = sc.nextLine();
+        FileInputStream fis =new FileInputStream(name + ".data");
+        ObjectInputStream ois =new ObjectInputStream(fis);
+        AnimatedMovie M = (AnimatedMovie)ois.readObject();
+        fis.close();
+        Movies.put(name, M);
+    }
+
+    void printAnimatorOrActor(){
         System.out.println("Zadejte jmeno animatora pro vypsani: ");
         String name = sc.nextLine(); 
     }

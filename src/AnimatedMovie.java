@@ -109,7 +109,8 @@ public class AnimatedMovie extends Movie implements Serializable {
     }
     
     void printMovie(String name){
-        //Movies.get(name).sortScore();
+        Movie test = Movies.get(name);
+        test.sortScore();
         // try catch chybi - NullPointerException
         System.out.println("Jmeno: " + Movies.get(name).getName() + "\nReziser: " +  Movies.get(name).getDirector());
         System.out.println("Vydano: " + Movies.get(name).getReleaseDate() + "\nAnimatori: " + Arrays.toString(((AnimatedMovie)Movies.get(name)).getAnimatorsOrActors()));

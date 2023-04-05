@@ -101,14 +101,14 @@ public abstract class Movie implements Serializable {
         int listSize = 2;
         for (int i = 0; i < listSize; i++) {
             for (int j = 0; j < listSize-1; j++) {
-                int scoreBuffer0 = Movies.get(name).getScoreList().get(j);
-                int scoreBuffer1 = Movies.get(name).getScoreList().get(j+1);
-                String scoreCommentBuffer0 = Movies.get(name).getScoreComment(j);
+                int scoreBuffer0 = this.getScore(j);
+                int scoreBuffer1 = this.getScore(j+1);
+                String scoreCommentBuffer0 = this.getScoreComment(j);
                 if(scoreBuffer0 < scoreBuffer1) {
-                    Movies.get(name).getScoreList().set(j, scoreBuffer1);
-                    Movies.get(name).getScoreList().set(j+1, scoreBuffer0);
-                    Movies.get(name).getScoreCommentList().set(j, getScoreComment(j));
-                    Movies.get(name).getScoreCommentList().set(j+1, scoreCommentBuffer0);
+                    this.getScoreList().set(j, scoreBuffer1);
+                    this.getScoreList().set(j+1, scoreBuffer0);
+                    this.getScoreCommentList().set(j, getScoreComment(j+1));
+                    this.getScoreCommentList().set(j+1, scoreCommentBuffer0);
                 }
 
             }

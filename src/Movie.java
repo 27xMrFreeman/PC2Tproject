@@ -96,12 +96,13 @@ public abstract class Movie implements Serializable {
                 System.out.println("\n");
         }
     }
-    public void sortScore(String nameSort) {
-        int listSize = Movies.get(nameSort).getScoreList().size();
+    public void sortScore() {
+        //int listSize = Movies.get(name).getScoreList().size();
+        int listSize = 2;
         for (int i = 0; i < listSize; i++) {
             for (int j = 0; j < listSize-1; j++) {
-                int scoreBuffer0 = Movies.get(name).getScore(j);
-                int scoreBuffer1 = Movies.get(name).getScore(j+1);
+                int scoreBuffer0 = Movies.get(name).getScoreList().get(j);
+                int scoreBuffer1 = Movies.get(name).getScoreList().get(j+1);
                 String scoreCommentBuffer0 = Movies.get(name).getScoreComment(j);
                 if(scoreBuffer0 < scoreBuffer1) {
                     Movies.get(name).getScoreList().set(j, scoreBuffer1);

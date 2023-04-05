@@ -97,8 +97,7 @@ public abstract class Movie implements Serializable {
         }
     }
     public void sortScore() {
-        //int listSize = Movies.get(name).getScoreList().size();
-        int listSize = 2;
+        int listSize = this.getScoreList().size();
         for (int i = 0; i < listSize; i++) {
             for (int j = 0; j < listSize-1; j++) {
                 int scoreBuffer0 = this.getScore(j);

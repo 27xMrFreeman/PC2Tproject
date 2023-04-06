@@ -11,7 +11,7 @@ public class App implements Serializable {
         int ans;
         Boolean flag = true;
         Scanner sc = new Scanner(System.in);
-        Person P;
+        Person P = new Person();
         Movie A = null;
         while(flag ==true){
         System.out.println("1: add 2: edit 3: hodnoceni 4: ulozit do souboru 5: nacist ze souboru 6: smazat film 7: vypsat vsechny filmy 8: vyhledat film 9: konec");
@@ -59,7 +59,7 @@ public class App implements Serializable {
                 flag = false;
                 break;
             case 10:
-                
+                P.getMadeMovies();
             }
        
         }

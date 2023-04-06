@@ -19,7 +19,7 @@ public class Person {
     public Person(PersonType personType) {
         this.personType = personType;
     }
-
+    public Person() {}
     public void setMovieCount(int movieCount) {
         this.movieCount = movieCount;
     }

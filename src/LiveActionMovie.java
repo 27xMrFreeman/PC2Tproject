@@ -10,8 +10,9 @@ public class LiveActionMovie extends Movie implements Serializable{
     String actors [];
     transient Scanner sc = new Scanner(System.in);
 
-    public LiveActionMovie(String name, String director, String [] actoes, int releaseDate){
+    public LiveActionMovie(String name, String director, String [] actors, int releaseDate){
         super(name, director, releaseDate);
+        this.actors = actors;
     }
     public LiveActionMovie(){
         this.name = "";
@@ -34,20 +35,15 @@ public class LiveActionMovie extends Movie implements Serializable{
             String buffer = sc.nextLine();
             actors = buffer.split(", ");
             System.out.println(Arrays.toString(actors));
-        System.out.println("Zadejte bodove hodnoceni (1-10) ");
-            score.add(sc.nextInt());
-            sc.nextLine();
-        System.out.println("Prejete si pridat komentar k hodnoceni? (y/n) ");
-        String ans = sc.nextLine();
-        switch(ans) { 
-            case "y":
-                System.out.println("Napiste komentar");
-                scoreComment.add(sc.nextLine());
-                break;
-            case "n":
-                break;
-        }
         Movies.put(name, new LiveActionMovie(name, director, actors, releaseDate));
+        for (String personName : actors) {
+            if(P.personMap.containsKey(personName)){
+                P.personMap.get(personName).addMovieToPerson(name);
+            }
+            else {
+            P.personMap.put(personName, new Person(personName, name, Person.PersonType.Actor));
+            }
+        }
     }
 
     void editMovie() {

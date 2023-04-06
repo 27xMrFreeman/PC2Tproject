@@ -158,7 +158,7 @@ public class AnimatedMovie extends Movie implements Serializable {
     public void addScore() {
         System.out.println("Jmeno filmu kam chcete pridat hodnoceni: ");
         String name = sc.nextLine();
-        System.out.println("Zadejte bodove hodnoceni: ");
+        System.out.println("Zadejte bodove hodnoceni 1-10: ");
         Movies.get(name).score.add(sc.nextInt());
         sc.nextLine();
         System.out.println("Prejete si zadat komentar?: y/n");

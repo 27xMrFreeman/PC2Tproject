@@ -93,7 +93,7 @@ public class LiveActionMovie extends Movie implements Serializable{
     void printMovie(String name){
         // try catch chybi - NullPointerException
         System.out.println("Jmeno: " + Movies.get(name).getName() + "\nReziser: " +  Movies.get(name).getDirector());
-        System.out.println("Vydano: " + Movies.get(name).getReleaseDate() + "\nAnimatori: " + Arrays.toString(((LiveActionMovie)Movies.get(name)).getAnimatorsOrActors()));
+        System.out.println("Vydano: " + Movies.get(name).getReleaseDate() + "\nHerci: " + Arrays.toString(((LiveActionMovie)Movies.get(name)).getAnimatorsOrActors()));
         System.out.println("Hodnoceni: " + Movies.get(name).getScoreList());
         System.out.println("Komentar: " + Movies.get(name).getScoreCommentList());
     }
@@ -124,5 +124,22 @@ public class LiveActionMovie extends Movie implements Serializable{
     void printAnimatorOrActor(){
         System.out.println("Zadejte jmeno animatora pro vypsani: ");
         String name = sc.nextLine(); 
+    }
+    public void addScore() {
+        System.out.println("Jmeno filmu kam chcete pridat hodnoceni: 1-5 ");
+        String name = sc.nextLine();
+        System.out.println("Zadejte bodove hodnoceni: ");
+        Movies.get(name).score.add(sc.nextInt());
+        sc.nextLine();
+        System.out.println("Prejete si zadat komentar?: y/n");
+        switch(sc.nextLine()){
+            case "y":
+                System.out.println("Zadejte komentar: ");
+                Movies.get(name).scoreComment.add(sc.nextLine());
+                break;
+            case "n":
+                Movies.get(name).scoreComment.add("-");
+                break;
+        }
     }
 }

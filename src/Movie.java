@@ -76,7 +76,7 @@ public abstract class Movie implements Serializable {
     public String getScoreComment(int j) {
         return scoreComment.get(j);
     }
-    
+    abstract void addScore();
     abstract void addMovie();
     abstract void editMovie();
     abstract void printMovie(String name);

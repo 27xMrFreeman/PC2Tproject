@@ -32,7 +32,7 @@ public class App implements Serializable {
                 A.addMovie(P);
                 break;
             case 2:
-                A.editMovie();
+                A.editMovie(P);
                 break;
             case 8:
                 System.out.println("Zadejte jmeno filmu pro vypsani: ");

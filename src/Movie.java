@@ -79,7 +79,7 @@ public abstract class Movie implements Serializable {
     
     abstract void addScore();
     abstract void addMovie(Person P);
-    abstract void editMovie();
+    abstract void editMovie(Person P);
     abstract void printMovie(String name);
     abstract void saveMovie();
     abstract void loadMovie() throws IOException, ClassNotFoundException, InvalidClassException;

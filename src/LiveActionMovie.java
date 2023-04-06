@@ -46,7 +46,7 @@ public class LiveActionMovie extends Movie implements Serializable{
         }
     }
 
-    void editMovie() {
+    void editMovie(Person P) {
         System.out.println("Zadejte jmeno filmu na upravu: ");
         String name = sc.nextLine();
         String new_name = name;

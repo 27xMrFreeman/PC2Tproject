@@ -74,7 +74,7 @@ public class AnimatedMovie extends Movie implements Serializable {
         }
     }
 
-    void editMovie() {
+    void editMovie(Person P) {
         System.out.println("Zadejte jmeno filmu na upravu: ");
         String name = sc.nextLine();
         String new_name = name;
@@ -105,6 +105,14 @@ public class AnimatedMovie extends Movie implements Serializable {
                 String buffer = sc.nextLine();
                 animators = buffer.split(", ");
                 ((AnimatedMovie) Movies.get(new_name)).setAnimators(animators);
+                for (String personName : animators) {
+                    if(P.personMap.containsKey(personName)){
+                        P.personMap.get(personName).addMovieToPerson(new_name);
+                    }
+                    else {
+                    P.personMap.put(personName, new Person(personName, new_name, Person.PersonType.Animator));
+                    }
+                }
                 break;
             case 5:
                 System.out.println("Zadejte novy doporuceny vek: ");

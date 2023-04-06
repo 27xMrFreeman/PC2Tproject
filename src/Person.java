@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 public class Person {
     HashMap<String, Person> personMap= new HashMap<>();
@@ -31,14 +33,18 @@ public class Person {
         this.movieCount = movieCount + 1;
     }
 
-    public List<String> getMadeMovies() {
-        return this.madeMovies;
+    public void getMadeMovies() {
+        System.out.println("Zadejte jmeno herce/animatora: ");
+        Scanner sc = new Scanner(System.in);
+        String personName = sc.nextLine();
+        this.personMap.get(personName).madeMovies.forEach(System.out::println);
+        sc.close();
     }
     public int getMovieCount() {
         return movieCount;
     }
 
     public void addPerson(String personName, String movie, PersonType personType) {
-        personMap.put(personName, new Person(personName, movie, personType));
+        this.personMap.put(personName, new Person(personName, movie, personType));
     }
 }

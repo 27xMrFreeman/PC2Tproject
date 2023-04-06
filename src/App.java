@@ -12,10 +12,10 @@ public class App implements Serializable {
         Boolean flag = true;
         Scanner sc = new Scanner(System.in);
         Movie A;
+        Person P;
         while(flag ==true){
         System.out.println("1: add 2: edit 3: hodnoceni 4: ulozit do souboru 5: nacist ze souboru 6: smazat film 7: vypsat vsechny filmy 8: vyhledat film 9: konec");
         ans = sc.nextInt();
-        
         switch(ans){
             case 1:
                 System.out.println("Zadejte typ filmu hrany/animovany");
@@ -58,6 +58,8 @@ public class App implements Serializable {
             case 9:
                 flag = false;
                 break;
+            case 10:
+                
             }
        
         }

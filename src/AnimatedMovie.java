@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+
+
+
 public class AnimatedMovie extends Movie implements Serializable {
     private static final long serialVersionUID = 6529685098267757690L;
     int suggestedAge;
@@ -44,7 +47,7 @@ public class AnimatedMovie extends Movie implements Serializable {
     public String[] getAnimatorsOrActors() {
         return animators;
     }
-    void addMovie() {
+    void addMovie(Person P) {
         int i = 0;
         System.out.println("Zadejte jmeno filmu");
             name = sc.nextLine();
@@ -56,11 +59,19 @@ public class AnimatedMovie extends Movie implements Serializable {
         System.out.println("Zadejte seznam animatoru, oddelene carkou a mezerou"); 
             String buffer = sc.nextLine();
             animators = buffer.split(", ");
-            System.out.println(Arrays.toString(animators));
+            System.out.println(Arrays.toString(animators)); //pouze pro debugging, smazat před odevzdáním
         System.out.println("Zadejte doporuceny vek ");
             suggestedAge = sc.nextInt();
             sc.nextLine();
         Movies.put(name, new AnimatedMovie(name, director, animators, releaseDate, suggestedAge));
+        for (String personName : animators) {
+            if(P.personMap.containsKey(personName)){
+                P.personMap.get(personName).addMovieToPerson(name);
+            }
+            else {
+            P.personMap.put(personName, new Person(personName, name, Person.PersonType.Animator));
+            }
+        }
     }
 
     void editMovie() {

@@ -21,7 +21,7 @@ public class LiveActionMovie extends Movie implements Serializable{
     public String[] getAnimatorsOrActors() {
         return actors;
     }
-    void addMovie() {
+    void addMovie(Person P) {
         int i = 0;
         System.out.println("Zadejte jmeno filmu");
             name = sc.nextLine();

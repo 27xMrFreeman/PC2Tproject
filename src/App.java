@@ -8,17 +8,27 @@ import java.util.Iterator;
 public class App implements Serializable {
     public static void main(String[] args) throws Exception {
         System.out.println();
-        AnimatedMovie A = new AnimatedMovie();
         int ans;
         Boolean flag = true;
         Scanner sc = new Scanner(System.in);
-
+        Movie A;
         while(flag ==true){
-        System.out.println("1: add 2: edit 3: hodnoceni 4: ulozit do souboru 5: nacist ze souboru 6: smazat film 7: vypsat vsechny filmy 8: vypsat 1 film 9: vypsat podle animatora 10: konec");
+        System.out.println("1: add 2: edit 3: hodnoceni 4: ulozit do souboru 5: nacist ze souboru 6: smazat film 7: vypsat vsechny filmy 8: vyhledat film 9: konec");
         ans = sc.nextInt();
         
         switch(ans){
             case 1:
+                System.out.println("Zadejte typ filmu hrany/animovany");
+                String type = sc.nextLine();
+                if (type =="hrany"){
+                    LiveActionMovie A = new LiveActionMovie();
+                    }
+                else if (type == "animovany"){
+                     AnimatedMovie A = new AnimatedMovie();
+                    }
+                else{
+                    System.out.println("tento typ neexistuje");
+                    }
                 A.addMovie();
                 break;
             case 2:
@@ -33,7 +43,7 @@ public class App implements Serializable {
             case 3:
                 A.addScore();
                 break;
-            case 4:                 // nefunguje
+            case 4:
                 A.saveMovie();
                 break;
             case 5:

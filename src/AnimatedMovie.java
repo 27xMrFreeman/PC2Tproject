@@ -105,6 +105,7 @@ public class AnimatedMovie extends Movie implements Serializable {
                 break;
             case 4:
                 System.out.println("Zadejte novy seznam animatoru: ");
+                sc.nextLine();
                 String buffer = sc.nextLine();
                 animators = buffer.split(", ");
                 ((AnimatedMovie) Movies.get(new_name)).setAnimators(animators);

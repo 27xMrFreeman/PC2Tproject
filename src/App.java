@@ -25,7 +25,7 @@ public class App implements Serializable {
                 String type = sc.next();
                 switch(type){
                     case "h":
-                        try{M.addMovie(LA);} 
+                        try{LA.createMovie(P); M.addMovie(LA);} 
                         catch (NullPointerException npe) {
                         LA = new LiveActionMovie();
                         LA = LA.createMovie(P);

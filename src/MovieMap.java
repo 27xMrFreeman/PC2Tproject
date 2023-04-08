@@ -15,24 +15,21 @@ public class MovieMap {
         System.out.println("Zadejte jmeno filmu na upravu: ");
         String name = sc.nextLine();
         String className = Movies.get(name).getClass().getName();
-        boolean flag = true;
-        int i = 0;
-        while (flag == true) {
-            switch (className) {
-                case "LiveActionMovie":
-                    Movie LA = new LiveActionMovie();
-                    LA = Movies.get(name);
-                    LA.editMovie(P, name, Movies);
-                    break;
-                case "AnimatedMovie":
-                    Movie AN = new AnimatedMovie();
-                    AN = Movies.get(name);
-                    AN.editMovie(P, name, Movies);
-                    break;
-                default: System.out.println("Unexpected class type");
+        switch (className) {
+            case "LiveActionMovie":
+                Movie LA = new LiveActionMovie();
+                LA = Movies.get(name);
+                LA.editMovie(P, name, Movies);
+                break;
+            case "AnimatedMovie":
+                Movie AN = new AnimatedMovie();
+                AN = Movies.get(name);
+                AN.editMovie(P, name, Movies);
+                break;
+            default: System.out.println("Unexpected class type");
             }
-        }
     }
+    
 
     public void printMovie(String name) {
         String className = Movies.get(name).getClass().getName();

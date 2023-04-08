@@ -80,6 +80,7 @@ public class LiveActionMovie extends Movie implements Serializable{
                 ((LiveActionMovie) Movies.get(new_name)).setReleaseDate(releaseDate);
                 break;
             case 4:
+                sc.nextLine();
                 System.out.println("Zadejte novy seznam hercu: ");
                 String buffer = sc.nextLine();
                 actors = buffer.split(", ");

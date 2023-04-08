@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.lang.*;
 import java.io.*;
 import java.util.Set;
@@ -47,7 +48,7 @@ public class AnimatedMovie extends Movie implements Serializable {
     public String[] getAnimatorsOrActors() {
         return animators;
     }
-    void addMovie(Person P) {
+    AnimatedMovie createMovie(Person P) {
         int i = 0;
         System.out.println("Zadejte jmeno filmu");
             name = sc.nextLine();
@@ -63,7 +64,6 @@ public class AnimatedMovie extends Movie implements Serializable {
         System.out.println("Zadejte doporuceny vek ");
             suggestedAge = sc.nextInt();
             sc.nextLine();
-        Movies.put(name, new AnimatedMovie(name, director, animators, releaseDate, suggestedAge));
         for (String personName : animators) {
             if(P.personMap.containsKey(personName)){
                 P.personMap.get(personName).addMovieToPerson(name);
@@ -72,12 +72,15 @@ public class AnimatedMovie extends Movie implements Serializable {
             P.personMap.put(personName, new Person(personName, name, Person.PersonType.Animator));
             }
         }
+        AnimatedMovie AN = new AnimatedMovie(name, director, animators, releaseDate, suggestedAge);
+        return AN;
     }
 
-    void editMovie(Person P) {
-        System.out.println("Zadejte jmeno filmu na upravu: ");
-        String name = sc.nextLine();
+    void editMovie(Person P, String name, HashMap Movies) {
+        // System.out.println("Zadejte jmeno filmu na upravu: ");
+        // String name = sc.nextLine();
         String new_name = name;
+
         boolean flag = true;
         int i = 0;
         while (flag == true) {
@@ -93,12 +96,12 @@ public class AnimatedMovie extends Movie implements Serializable {
             case 2:
                 System.out.println("Zadejte nove jmeno rezisera: ");
                 director = sc.next();
-                Movies.get(new_name).setDirector(director);
+                ((AnimatedMovie) Movies.get(new_name)).setDirector(director);
                 break;
             case 3:
                 System.out.println("Zadejte novy rok vydani: ");
                 releaseDate = sc.nextInt();
-                Movies.get(new_name).setReleaseDate(releaseDate);
+                ((AnimatedMovie) Movies.get(new_name)).setReleaseDate(releaseDate);
                 break;
             case 4:
                 System.out.println("Zadejte novy seznam animatoru: ");
@@ -127,29 +130,29 @@ public class AnimatedMovie extends Movie implements Serializable {
         }
     }
     
-    void printMovie(String name){
-        Movies.get(name).sortScore();
-        // try catch chybi - NullPointerException
-        System.out.println("Jmeno: " + Movies.get(name).getName() + "\nReziser: " +  Movies.get(name).getDirector());
-        System.out.println("Vydano: " + Movies.get(name).getReleaseDate() + "\nAnimatori: " + Arrays.toString(((AnimatedMovie)Movies.get(name)).getAnimatorsOrActors()));
-        System.out.println("Doporuceny vek: " + ((AnimatedMovie) Movies.get(name)).getSuggestedAge() + "\nHodnoceni: " + Movies.get(name).getScoreList());
-        System.out.println("Komentar: " + Movies.get(name).getScoreCommentList());
-    }
-    void saveMovie(){
+    // void printMovie(String name){
+    //     Movies.get(name).sortScore();
+    //     // try catch chybi - NullPointerException
+    //     System.out.println("Jmeno: " + Movies.get(name).getName() + "\nReziser: " +  Movies.get(name).getDirector());
+    //     System.out.println("Vydano: " + Movies.get(name).getReleaseDate() + "\nAnimatori: " + Arrays.toString(((AnimatedMovie)Movies.get(name)).getAnimatorsOrActors()));
+    //     System.out.println("Doporuceny vek: " + ((AnimatedMovie) Movies.get(name)).getSuggestedAge() + "\nHodnoceni: " + Movies.get(name).getScoreList());
+    //     System.out.println("Komentar: " + Movies.get(name).getScoreCommentList());
+    // }
+    void saveMovie(HashMap Movies){
         System.out.println("Zadejte jmeno filmu pro ulozeni: ");
         String name = sc.nextLine();
         try {
         FileOutputStream fos = new FileOutputStream(name + ".data");
         ObjectOutputStream oos;
         oos = new ObjectOutputStream(fos);
-        oos.writeObject(((AnimatedMovie)Movies.get(name)));
+        oos.writeObject(((AnimatedMovie) Movies.get(name)));
         fos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    void loadMovie() throws IOException, ClassNotFoundException{
+    void loadMovie(HashMap Movies) throws IOException, ClassNotFoundException{
         System.out.println("Zadejte jmeno filmu pro nacteni: ");
         String name = sc.nextLine();
         FileInputStream fis =new FileInputStream(name + ".data");
@@ -163,20 +166,20 @@ public class AnimatedMovie extends Movie implements Serializable {
         System.out.println("Zadejte jmeno animatora pro vypsani: ");
         String name = sc.nextLine(); 
     }
-    public void addScore() {
+    public void addScore(HashMap Movies) {
         System.out.println("Jmeno filmu kam chcete pridat hodnoceni: ");
         String name = sc.nextLine();
         System.out.println("Zadejte bodove hodnoceni 1-10: ");
-        Movies.get(name).score.add(sc.nextInt());
+        ((AnimatedMovie) Movies.get(name)).score.add(sc.nextInt());
         sc.nextLine();
         System.out.println("Prejete si zadat komentar?: y/n");
         switch(sc.nextLine()){
             case "y":
                 System.out.println("Zadejte komentar: ");
-                Movies.get(name).scoreComment.add(sc.nextLine());
+                ((AnimatedMovie) Movies.get(name)).scoreComment.add(sc.nextLine());
                 break;
             case "n":
-                Movies.get(name).scoreComment.add("-");
+                ((AnimatedMovie) Movies.get(name)).scoreComment.add("-");
                 break;
         }
     }

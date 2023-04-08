@@ -18,7 +18,7 @@ public abstract class Movie implements Serializable {
     List<String> scoreComment = new ArrayList<String>();
     int releaseDate;
     List<Integer> score = new ArrayList<Integer>();
-    HashMap<String, Movie> Movies = new HashMap<>();
+    // **IMPLEMENTOVANO V MOVIEMAP**//HashMap<String, Movie> Movies = new HashMap<>();
 
     public Movie(){
         this.name = "";
@@ -80,26 +80,27 @@ public abstract class Movie implements Serializable {
         return scoreComment.get(j);
     }
     
-    abstract void addScore();
-    abstract void addMovie(Person P);
-    abstract void editMovie(Person P);
-    abstract void printMovie(String name);
-    abstract void saveMovie();
-    abstract void loadMovie() throws IOException, ClassNotFoundException, InvalidClassException;
+    abstract void addScore(HashMap Movies);
+    abstract Movie createMovie(Person P);
+    abstract void editMovie(Person P, String name, HashMap Movies);
+    // **IMPLEMENTOVANO V MOVIEMAP**// abstract void printMovie(String name);
+    abstract void saveMovie(HashMap Movies);
+    abstract void loadMovie(HashMap Movies) throws IOException, ClassNotFoundException, InvalidClassException;
     abstract void printAnimatorOrActor();
-
-    void deleteMovie () {
-        System.out.println("Zadejte jmeno filmu ktery chcete smazat: ");
-        String name = sc.nextLine();
-        Movies.remove(name);
-    }
-    void printAllMovies(){
-        Set <String> names = Movies.keySet();
-		    for(String name:names) {
-                printMovie(name);
-                System.out.println("\n");
-        }
-    }
+// **IMPLEMENTOVANO V MOVIEMAP**
+    // void deleteMovie (HashMap Movies) {
+    //     System.out.println("Zadejte jmeno filmu ktery chcete smazat: ");
+    //     String name = sc.nextLine();
+    //     Movies.remove(name);
+    // }
+    // void printAllMovies(HashMap Movies){
+    //     Set <String> names = Movies.keySet();
+	// 	    for(String name:names) {
+    //             printMovie(name);
+    //             System.out.println("\n");
+    //     }
+    // }
+// **IMPLEMENTOVANO V MOVIEMAP**
     public void sortScore() {
         int listSize = this.getScoreList().size();
         for (int i = 0; i < listSize; i++) {

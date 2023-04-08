@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.lang.*;
 import java.io.*;
 import java.util.Set;
@@ -19,10 +20,15 @@ public class LiveActionMovie extends Movie implements Serializable{
         this.director = "";
         this.releaseDate = 0;
     }
+    public void setActors(String [] actors) {
+        this.actors = actors;
+    }
     public String[] getAnimatorsOrActors() {
         return actors;
     }
-    void addMovie(Person P) {
+    
+    
+    LiveActionMovie createMovie(Person P) {
         int i = 0;
         System.out.println("Zadejte jmeno filmu");
             name = sc.nextLine();
@@ -35,7 +41,6 @@ public class LiveActionMovie extends Movie implements Serializable{
             String buffer = sc.nextLine();
             actors = buffer.split(", ");
             System.out.println(Arrays.toString(actors));
-        Movies.put(name, new LiveActionMovie(name, director, actors, releaseDate));
         for (String personName : actors) {
             if(P.personMap.containsKey(personName)){
                 P.personMap.get(personName).addMovieToPerson(name);
@@ -44,11 +49,13 @@ public class LiveActionMovie extends Movie implements Serializable{
             P.personMap.put(personName, new Person(personName, name, Person.PersonType.Actor));
             }
         }
+        LiveActionMovie LA = new LiveActionMovie(name, director, actors, releaseDate);
+        return LA;
     }
 
-    void editMovie(Person P) {
-        System.out.println("Zadejte jmeno filmu na upravu: ");
-        String name = sc.nextLine();
+    void editMovie(Person P, String name, HashMap Movies) {
+        // System.out.println("Zadejte jmeno filmu na upravu: ");
+        // String name = sc.nextLine();
         String new_name = name;
         boolean flag = true;
         int i = 0;
@@ -65,18 +72,18 @@ public class LiveActionMovie extends Movie implements Serializable{
             case 2:
                 System.out.println("Zadejte nove jmeno rezisera: ");
                 director = sc.next();
-                Movies.get(new_name).setDirector(director);
+                ((LiveActionMovie) Movies.get(new_name)).setDirector(director);
                 break;
             case 3:
                 System.out.println("Zadejte novy rok vydani: ");
                 releaseDate = sc.nextInt();
-                Movies.get(new_name).setReleaseDate(releaseDate);
+                ((LiveActionMovie) Movies.get(new_name)).setReleaseDate(releaseDate);
                 break;
             case 4:
-                System.out.println("Zadejte novy seznam animatoru: ");
+                System.out.println("Zadejte novy seznam hercu: ");
                 String buffer = sc.nextLine();
                 actors = buffer.split(", ");
-                ((AnimatedMovie) Movies.get(new_name)).setAnimators(actors);
+                ((LiveActionMovie) Movies.get(new_name)).setActors(actors);
                 break;
             case 6:
                 flag = false;
@@ -86,13 +93,15 @@ public class LiveActionMovie extends Movie implements Serializable{
         }
     }
 
-    void printMovie(String name){
-        // try catch chybi - NullPointerException
-        System.out.println("Jmeno: " + Movies.get(name).getName() + "\nReziser: " +  Movies.get(name).getDirector());
-        System.out.println("Vydano: " + Movies.get(name).getReleaseDate() + "\nHerci: " + Arrays.toString(((LiveActionMovie)Movies.get(name)).getAnimatorsOrActors()));
-        System.out.println("Hodnoceni: " + Movies.get(name).getScoreList());
-        System.out.println("Komentar: " + Movies.get(name).getScoreCommentList());
-    }
+// **IMPLEMENTOVANO V MOVIEMAP**
+    // void printMovie(String name, HashMap Movies){
+    //     // try catch chybi - NullPointerException
+    //     System.out.println("Jmeno: " + Movies.get(name).getName() + "\nReziser: " +  Movies.get(name).getDirector());
+    //     System.out.println("Vydano: " + Movies.get(name).getReleaseDate() + "\nHerci: " + Arrays.toString(((LiveActionMovie)Movies.get(name)).getAnimatorsOrActors()));
+    //     System.out.println("Hodnoceni: " + Movies.get(name).getScoreList());
+    //     System.out.println("Komentar: " + Movies.get(name).getScoreCommentList());
+    // }
+// **IMPLEMENTOVANO V MOVIEMAP**
 
     void saveMovie(){
         System.out.println("Zadejte jmeno filmu pro ulozeni: ");

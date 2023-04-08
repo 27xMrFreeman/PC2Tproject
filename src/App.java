@@ -14,7 +14,7 @@ public class App implements Serializable {
         Person P = new Person();
         Movie A = null;
         while(flag ==true){
-        System.out.println("1: add 2: edit 3: hodnoceni 4: ulozit do souboru 5: nacist ze souboru 6: smazat film 7: vypsat vsechny filmy 8: vyhledat film 9: konec");
+        System.out.println("1: add 2: edit 3: hodnoceni 4: ulozit do souboru 5: nacist ze souboru 6: smazat film 7: vypsat vsechny filmy 8: vyhledat film 9: konec 10: vypsat filmy podle herce/animatora");
         ans = sc.nextInt(); 
         switch(ans){
             case 1:
@@ -38,7 +38,12 @@ public class App implements Serializable {
                 System.out.println("Zadejte jmeno filmu pro vypsani: ");
                 sc.nextLine();
                 String name = sc.nextLine();
-                A.printMovie(name);
+                try{
+                ((AnimatedMovie) A).printMovie(name);
+                }
+                catch (ClassCastException e){
+                    ((LiveActionMovie) A).printMovie(name);
+                }
                 break;
             case 3:
                 A.addScore();
@@ -47,8 +52,39 @@ public class App implements Serializable {
                 A.saveMovie();
                 break;
             case 5:
+            try {
+            String C = A.loadClass();
+            if(C == "AnimatedMovie"){
+                System.out.println("1");
                 A.loadMovie();
-                break;
+                A.printMovie("ad");
+            }
+            else{
+                
+                System.out.println("2");
+                A.loadMovie();
+                A.printMovie("fo");
+                
+            }
+            }
+            catch (NullPointerException npe){
+                try{
+                    System.out.println("3");
+                A = new LiveActionMovie();
+                A.loadMovie();
+                ((LiveActionMovie)A).printMovie("fo");
+                
+                }
+                catch (ClassCastException x) {
+                    System.out.println("4");
+                    A = new AnimatedMovie();
+                    A.loadMovie();
+                    System.out.println("4");
+                    ((AnimatedMovie)A).printMovie("ad");
+                    }
+            }
+
+               finally{ break;}
             case 6:
                 A.deleteMovie();
                 break;

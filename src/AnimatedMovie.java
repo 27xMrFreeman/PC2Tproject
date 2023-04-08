@@ -149,7 +149,7 @@ public class AnimatedMovie extends Movie implements Serializable {
         }
     }
 
-    public void loadMovie() throws IOException, ClassNotFoundException{
+    void loadMovie() throws IOException, ClassNotFoundException{
         System.out.println("Zadejte jmeno filmu pro nacteni: ");
         String name = sc.nextLine();
         FileInputStream fis =new FileInputStream(name + ".data");

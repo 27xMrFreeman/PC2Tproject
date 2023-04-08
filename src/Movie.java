@@ -24,6 +24,9 @@ public abstract class Movie implements Serializable {
         this.name = "";
         this.director = "";
         this.releaseDate = 0;
+        this.scoreComment = scoreComment;
+        this.score = score;
+
 
     }
     public Movie(String name, String director, int releaseDate) {
@@ -114,9 +117,18 @@ public abstract class Movie implements Serializable {
             }
         }
     }
+    public String loadClass() throws IOException, ClassNotFoundException{
+        System.out.println("Zadejte jmeno filmu pro nacteni: ");
+        String name = sc.nextLine();
+        FileInputStream fis =new FileInputStream(name + ".data");
+        ObjectInputStream ois =new ObjectInputStream(fis);
+        Movie M = (Movie)ois.readObject();
+        fis.close();
+        return M.getClass().getName();
+        }
+        
+    }
     
-    
-}
     
 
 

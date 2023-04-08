@@ -131,21 +131,21 @@ public class LiveActionMovie extends Movie implements Serializable{
         System.out.println("Zadejte jmeno animatora pro vypsani: ");
         String name = sc.nextLine(); 
     }
-    public void addScore() {
-        System.out.println("Jmeno filmu kam chcete pridat hodnoceni: 1-5 ");
-        String name = sc.nextLine();
-        System.out.println("Zadejte bodove hodnoceni: ");
-        Movies.get(name).score.add(sc.nextInt());
-        sc.nextLine();
-        System.out.println("Prejete si zadat komentar?: y/n");
-        switch(sc.nextLine()){
-            case "y":
-                System.out.println("Zadejte komentar: ");
-                Movies.get(name).scoreComment.add(sc.nextLine());
-                break;
-            case "n":
-                Movies.get(name).scoreComment.add("-");
-                break;
-        }
-    }
+// **IMPLEMENTOVANO V MOVIEMAP**
+    // public void addScore() {
+        
+    //     System.out.println("Zadejte bodove hodnoceni: ");
+    //     Movies.get(name).score.add(sc.nextInt());
+    //     sc.nextLine();
+    //     System.out.println("Prejete si zadat komentar?: y/n");
+    //     switch(sc.nextLine()){
+    //         case "y":
+    //             System.out.println("Zadejte komentar: ");
+    //             Movies.get(name).scoreComment.add(sc.nextLine());
+    //             break;
+    //         case "n":
+    //             Movies.get(name).scoreComment.add("-");
+    //             break;
+    //     }
+    // }
 }

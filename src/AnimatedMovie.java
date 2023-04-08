@@ -130,7 +130,7 @@ public class AnimatedMovie extends Movie implements Serializable {
         }
         }
     }
-    
+// **IMPLEMENTOVANO V MOVIEMAP**
     // void printMovie(String name){
     //     Movies.get(name).sortScore();
     //     // try catch chybi - NullPointerException
@@ -167,22 +167,24 @@ public class AnimatedMovie extends Movie implements Serializable {
         System.out.println("Zadejte jmeno animatora pro vypsani: ");
         String name = sc.nextLine(); 
     }
-    public void addScore(HashMap Movies) {
-        System.out.println("Jmeno filmu kam chcete pridat hodnoceni: ");
-        String name = sc.nextLine();
-        System.out.println("Zadejte bodove hodnoceni 1-10: ");
-        ((AnimatedMovie) Movies.get(name)).score.add(sc.nextInt());
-        sc.nextLine();
-        System.out.println("Prejete si zadat komentar?: y/n");
-        switch(sc.nextLine()){
-            case "y":
-                System.out.println("Zadejte komentar: ");
-                ((AnimatedMovie) Movies.get(name)).scoreComment.add(sc.nextLine());
-                break;
-            case "n":
-                ((AnimatedMovie) Movies.get(name)).scoreComment.add("-");
-                break;
-        }
-    }
+
+// **IMPLEMENTOVANO V MOVIEMAP**
+    // public void addScore(HashMap Movies) {
+    //     System.out.println("Jmeno filmu kam chcete pridat hodnoceni: ");
+    //     String name = sc.nextLine();
+    //     System.out.println("Zadejte bodove hodnoceni 1-10: ");
+    //     ((AnimatedMovie) Movies.get(name)).score.add(sc.nextInt());
+    //     sc.nextLine();
+    //     System.out.println("Prejete si zadat komentar?: y/n");
+    //     switch(sc.nextLine()){
+    //         case "y":
+    //             System.out.println("Zadejte komentar: ");
+    //             ((AnimatedMovie) Movies.get(name)).scoreComment.add(sc.nextLine());
+    //             break;
+    //         case "n":
+    //             ((AnimatedMovie) Movies.get(name)).scoreComment.add("-");
+    //             break;
+    //     }
+    // }
 }
     

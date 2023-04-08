@@ -6,8 +6,8 @@ import java.util.Set;
 public class MovieMap {
     public HashMap<String, Movie> Movies = new HashMap<>();
 
-    public void addMovie(Movie M) {
-        Movies.put(M.name, M);
+    public void addMovie(Movie Mo) {
+        Movie test = Movies.put(Mo.getName(), Mo);
     }
 
     public void editMovie(Person P) {
@@ -59,10 +59,54 @@ public class MovieMap {
         }
     }
 
-    void deleteMovie () {
+    public void deleteMovie () {
         Scanner sc = new Scanner(System.in);
         System.out.println("Zadejte jmeno filmu ktery chcete smazat: ");
         String name = sc.nextLine();
         Movies.remove(name);
+    }
+
+    public void addScore() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Jmeno filmu kam chcete pridat hodnoceni: ");
+        String name = sc.nextLine();
+        String className = Movies.get(name).getClass().getName();
+        switch (className) {
+            case "AnimatedMovie":
+                System.out.println("Zadejte bodove hodnoceni 1-10: ");
+                int ans = sc.nextInt();
+                if(10 < ans || ans < 1) {System.out.println("Invalid rating"); break;}
+                ((AnimatedMovie) Movies.get(name)).score.add(ans);
+                sc.nextLine();
+                System.out.println("Prejete si zadat komentar?: y/n");
+                switch(sc.nextLine()){
+                    case "y":
+                        System.out.println("Zadejte komentar: ");
+                        ((AnimatedMovie) Movies.get(name)).scoreComment.add(sc.nextLine());
+                        break;
+                    case "n":
+                        ((AnimatedMovie) Movies.get(name)).scoreComment.add("-");
+                        break;
+                }
+                break;
+            case "LiveActionMovie":
+                System.out.println("Zadejte bodove hodnoceni 1-5: ");
+                ans = sc.nextInt();
+                if(5 < ans || ans < 1) {System.out.println("Invalid rating"); break;}
+                Movies.get(name).score.add(ans);
+                sc.nextLine();
+                System.out.println("Prejete si zadat komentar?: y/n");
+                switch(sc.nextLine()){
+                    case "y":
+                        System.out.println("Zadejte komentar: ");
+                        Movies.get(name).scoreComment.add(sc.nextLine());
+                        break;
+                    case "n":
+                        Movies.get(name).scoreComment.add("-");
+                        break;
+                }
+                break;
+            default: System.out.println("Unexpected type in Movies hashmap");
+        }
     }
 }

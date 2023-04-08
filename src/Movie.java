@@ -80,7 +80,7 @@ public abstract class Movie implements Serializable {
         return scoreComment.get(j);
     }
     
-    abstract void addScore(HashMap Movies);
+    // **IMPLEMENTOVANO V MOVIEMAP**// abstract void addScore(HashMap Movies);
     abstract Movie createMovie(Person P);
     abstract void editMovie(Person P, String name, HashMap Movies);
     // **IMPLEMENTOVANO V MOVIEMAP**// abstract void printMovie(String name);

@@ -38,7 +38,7 @@ public class Person {
         Scanner sc = new Scanner(System.in);
         String personName = sc.nextLine();
         this.personMap.get(personName).madeMovies.forEach(System.out::println);
-        sc.close();
+        //sc.close();
     }
     public int getMovieCount() {
         return movieCount;

@@ -19,36 +19,28 @@ public class App implements Serializable {
         System.out.println("1: add 2: edit 3: hodnoceni 4: ulozit do souboru 5: nacist ze souboru 6: smazat film 7: vypsat vsechny filmy 8: vyhledat film 9: konec 10: vypsat filmy podle herce/animatora");
         ans = sc.nextInt(); 
         switch(ans){
-            case 1:
+            case 1: //funguje
                 System.out.println("Zadejte typ filmu hrany/animovany");
                 sc.nextLine();
                 String type = sc.next();
                 switch(type){
                     case "h":
-                        try{LA.createMovie(P); M.addMovie(LA);} 
-                        catch (NullPointerException npe) {
                         LA = new LiveActionMovie();
                         LA = LA.createMovie(P);
-                        System.out.println("Vytvoreno nove A typu LiveActionMovie");
                         M.addMovie(LA);
-                        }
                         break;
                     case "a":
-                        try{M.addMovie(AN);} 
-                        catch (NullPointerException npe) {
                         AN = new AnimatedMovie();
                         AN = AN.createMovie(P);
-                        System.out.println("Vytvoreno nove A typu AnimatedMovie");
                         M.addMovie(AN);
-                        }
                         break;
                     default: System.out.println("Invalid choice");
                 }
                 break;
-            case 2:
+            case 2: //funguje
                 M.editMovie(P);
                 break;
-            case 8:
+            case 8: //funguje
                 System.out.println("Zadejte jmeno filmu pro vypsani: ");
                 sc.nextLine();
                 String name = sc.nextLine();
@@ -59,8 +51,8 @@ public class App implements Serializable {
                     System.out.println("Movie doesn't exist");
                 }
                 break;
-            case 3:
-                //A.addScore();
+            case 3: //funguje
+                M.addScore();
                 break;
             case 4:
                 //M.saveMovie();
@@ -99,17 +91,19 @@ public class App implements Serializable {
             // }
 
             //    finally{ break;}
-            case 6:
+            case 6: //funguje
                 M.deleteMovie();
                 break;
-            case 7:
+            case 7: //funguje
                 M.printAllMovies();
                 break;
             case 9:
                 flag = false;
                 break;
-            case 10:
+            case 10: //funguje
                 P.getMadeMovies();
+                sc.nextLine();
+                break;
             }
        
         }

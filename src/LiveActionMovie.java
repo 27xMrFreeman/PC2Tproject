@@ -104,7 +104,7 @@ public class LiveActionMovie extends Movie implements Serializable{
     // }
 // **IMPLEMENTOVANO V MOVIEMAP**
 
-    void saveMovie(){
+    void saveMovie(){ //CHYBI DOIMPLEMENTOVAT
         System.out.println("Zadejte jmeno filmu pro ulozeni: ");
         String name = sc.nextLine();
         try {
@@ -118,7 +118,7 @@ public class LiveActionMovie extends Movie implements Serializable{
         }
     }
 
-    public void loadMovie() throws IOException, ClassNotFoundException{
+    public void loadMovie() throws IOException, ClassNotFoundException{ //CHYBI DOIMPLEMENTOVAT
         System.out.println("Zadejte jmeno filmu pro nacteni: ");
         String name = sc.nextLine();
         FileInputStream fis =new FileInputStream(name + ".data");
@@ -127,7 +127,7 @@ public class LiveActionMovie extends Movie implements Serializable{
         fis.close();
         Movies.put(name, M);
     }
-    void printAnimatorOrActor(){
+    void printAnimatorOrActor(){  //CHYBI DOIMPLEMENTOVAT
         System.out.println("Zadejte jmeno animatora pro vypsani: ");
         String name = sc.nextLine(); 
     }

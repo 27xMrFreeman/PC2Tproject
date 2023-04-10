@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Person {
     HashMap<String, Person> personMap= new HashMap<>();
@@ -46,5 +47,16 @@ public class Person {
 
     public void addPerson(String personName, String movie, PersonType personType) {
         this.personMap.put(personName, new Person(personName, movie, personType));
+    }
+    public void printMoreMovies(){
+        Set <String> names = personMap.keySet();
+		    for(String personName:names) {
+               int i = personMap.get(personName).madeMovies.size();
+               if (i>1){
+                System.out.println("Animator/herec: " + personName);
+                personMap.get(personName).madeMovies.forEach(System.out::println);
+               }
+                
+            }
     }
 }

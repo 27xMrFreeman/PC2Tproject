@@ -1,9 +1,16 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InvalidClassException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
 
 public class MovieMap {
+    private static final long serialVersionUID = 6529685098267757690L;
     public HashMap<String, Movie> Movies = new HashMap<>();
 
     public void addMovie(Movie Mo) {
@@ -29,7 +36,7 @@ public class MovieMap {
             default: System.out.println("Unexpected class type");
             }
     }
-    
+
 
     public void printMovie(String name) {
         String className = Movies.get(name).getClass().getName();
@@ -50,7 +57,7 @@ public class MovieMap {
             default: System.out.println("Unexpected type in Movies hashmap");
         }
     }
-    
+
     public void printAllMovies(){
         Set <String> names = Movies.keySet();
 		    for(String name:names) {
@@ -109,4 +116,40 @@ public class MovieMap {
             default: System.out.println("Unexpected type in Movies hashmap");
         }
     }
+
+    void saveMovie(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Zadejte jmeno filmu pro ulozeni: ");
+        String name = sc.nextLine();
+        try {
+            FileOutputStream fos = new FileOutputStream(name + ".data");
+            ObjectOutputStream oos;
+            oos = new ObjectOutputStream(fos);
+            oos.writeObject(( Movies.get(name)));
+            fos.close();
+            }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void loadMovie() throws IOException, ClassNotFoundException{
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Zadejte jmeno filmu pro nacteni: ");
+        String name = sc.nextLine();
+        try{
+            FileInputStream fis =new FileInputStream(name + ".data");
+            ObjectInputStream ois =new ObjectInputStream(fis);
+            AnimatedMovie M = (AnimatedMovie)ois.readObject();
+            fis.close();
+            Movies.put(name, M);
+        }
+        catch (ClassCastException e){
+                FileInputStream fas =new FileInputStream(name + ".data");
+                ObjectInputStream oas =new ObjectInputStream(fas);
+                LiveActionMovie N = (LiveActionMovie)oas.readObject();
+                fas.close();
+                Movies.put(name, N);
+        }
+    }
 }
+

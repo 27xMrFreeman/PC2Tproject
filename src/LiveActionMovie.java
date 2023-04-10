@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 public class LiveActionMovie extends Movie implements Serializable{
+    private static final long serialVersionUID = 6529685098267757690L;
     String actors [];
     transient Scanner sc = new Scanner(System.in);
 
@@ -102,31 +103,7 @@ public class LiveActionMovie extends Movie implements Serializable{
     //     System.out.println("Hodnoceni: " + Movies.get(name).getScoreList());
     //     System.out.println("Komentar: " + Movies.get(name).getScoreCommentList());
     // }
-// **IMPLEMENTOVANO V MOVIEMAP**
 
-    void saveMovie(){ //CHYBI DOIMPLEMENTOVAT
-        System.out.println("Zadejte jmeno filmu pro ulozeni: ");
-        String name = sc.nextLine();
-        try {
-        FileOutputStream fos = new FileOutputStream(name+ ".data");
-        ObjectOutputStream oos;
-        oos = new ObjectOutputStream(fos);
-        oos.writeObject(((LiveActionMovie)Movies.get(name)));
-        fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void loadMovie() throws IOException, ClassNotFoundException{ //CHYBI DOIMPLEMENTOVAT
-        System.out.println("Zadejte jmeno filmu pro nacteni: ");
-        String name = sc.nextLine();
-        FileInputStream fis =new FileInputStream(name + ".data");
-        ObjectInputStream ois =new ObjectInputStream(fis);
-        LiveActionMovie M = (LiveActionMovie)ois.readObject();
-        fis.close();
-        Movies.put(name, M);
-    }
     void printAnimatorOrActor(){  //CHYBI DOIMPLEMENTOVAT
         System.out.println("Zadejte jmeno animatora pro vypsani: ");
         String name = sc.nextLine(); 

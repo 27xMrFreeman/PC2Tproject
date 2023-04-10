@@ -139,29 +139,17 @@ public class AnimatedMovie extends Movie implements Serializable {
     //     System.out.println("Doporuceny vek: " + ((AnimatedMovie) Movies.get(name)).getSuggestedAge() + "\nHodnoceni: " + Movies.get(name).getScoreList());
     //     System.out.println("Komentar: " + Movies.get(name).getScoreCommentList());
     // }
-    void saveMovie(HashMap Movies){
-        System.out.println("Zadejte jmeno filmu pro ulozeni: ");
-        String name = sc.nextLine();
-        try {
-        FileOutputStream fos = new FileOutputStream(name + ".data");
-        ObjectOutputStream oos;
-        oos = new ObjectOutputStream(fos);
-        oos.writeObject(((AnimatedMovie) Movies.get(name)));
-        fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+ 
 
-    void loadMovie(HashMap Movies) throws IOException, ClassNotFoundException{
-        System.out.println("Zadejte jmeno filmu pro nacteni: ");
-        String name = sc.nextLine();
-        FileInputStream fis =new FileInputStream(name + ".data");
-        ObjectInputStream ois =new ObjectInputStream(fis);
-        AnimatedMovie M = (AnimatedMovie)ois.readObject();
-        fis.close();
-        Movies.put(name, M);
-    }
+    // void loadMovie(HashMap Movies) throws IOException, ClassNotFoundException{
+    //     System.out.println("Zadejte jmeno filmu pro nacteni: ");
+    //     String name = sc.nextLine();
+    //     FileInputStream fis =new FileInputStream(name + ".data");
+    //     ObjectInputStream ois =new ObjectInputStream(fis);
+    //     AnimatedMovie M = (AnimatedMovie)ois.readObject();
+    //     fis.close();
+    //     Movies.put(name, M);
+    // }
 
     void printAnimatorOrActor(){
         System.out.println("Zadejte jmeno animatora pro vypsani: ");

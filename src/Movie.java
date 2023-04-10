@@ -84,8 +84,8 @@ public abstract class Movie implements Serializable {
     abstract Movie createMovie(Person P);
     abstract void editMovie(Person P, String name, HashMap Movies);
     // **IMPLEMENTOVANO V MOVIEMAP**// abstract void printMovie(String name);
-    abstract void saveMovie(HashMap Movies);
-    abstract void loadMovie(HashMap Movies) throws IOException, ClassNotFoundException, InvalidClassException;
+    //// **IMPLEMENTOVANO V MOVIEMAP**//abstract void saveMovie(HashMap Movies);
+   // // **IMPLEMENTOVANO V MOVIEMAP**//abstract void loadMovie(HashMap Movies) throws IOException, ClassNotFoundException, InvalidClassException;
     abstract void printAnimatorOrActor();
 // **IMPLEMENTOVANO V MOVIEMAP**
     // void deleteMovie (HashMap Movies) {

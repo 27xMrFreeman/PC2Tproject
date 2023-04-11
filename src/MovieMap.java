@@ -142,6 +142,7 @@ public class MovieMap {
             AnimatedMovie M = (AnimatedMovie)ois.readObject();
             fis.close();
             Movies.put(name, M);
+            
         }
         catch (ClassCastException e){
                 FileInputStream fas =new FileInputStream(name + ".data");

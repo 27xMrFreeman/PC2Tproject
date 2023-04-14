@@ -58,8 +58,7 @@ public class App implements Serializable {
                 M.saveMovie();
                 break;
             case 5: //funguje
-                M.loadMovie();
-                //P.addMovieToPerson();
+                M.loadMovie(P);
                 break;
             case 6: //funguje
                 M.deleteMovie();

@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
 
-public class MovieMap {
+public class MovieMap extends Person {
     private static final long serialVersionUID = 6529685098267757690L;
     public HashMap<String, Movie> Movies = new HashMap<>();
 
@@ -132,7 +132,7 @@ public class MovieMap {
         }
     }
 
-    void loadMovie() throws IOException, ClassNotFoundException{
+    void loadMovie(Person P) throws IOException, ClassNotFoundException{
         Scanner sc = new Scanner(System.in);
         System.out.println("Zadejte jmeno filmu pro nacteni: ");
         String name = sc.nextLine();
@@ -142,6 +142,16 @@ public class MovieMap {
             AnimatedMovie M = (AnimatedMovie)ois.readObject();
             fis.close();
             Movies.put(name, M);
+            String [] animators = (((AnimatedMovie)Movies.get(name)).getAnimatorsOrActors());
+            int size = (((AnimatedMovie)Movies.get(name)).getAnimatorsOrActors()).length;
+            for (int i =0; i<size;i++){
+                if (!P.personMap.containsKey(animators[i])){
+                    P.addPerson(animators[i], name, Person.PersonType.Animator);
+                }
+                else{
+                    P.addMovieToPerson(name,animators[i]);
+                }
+            }
             
         }
         catch (ClassCastException e){
@@ -150,7 +160,18 @@ public class MovieMap {
                 LiveActionMovie N = (LiveActionMovie)oas.readObject();
                 fas.close();
                 Movies.put(name, N);
+                String [] actors = (((LiveActionMovie)Movies.get(name)).getAnimatorsOrActors());
+            int size = (((LiveActionMovie)Movies.get(name)).getAnimatorsOrActors()).length;
+                for (int i =0; i<size;i++){
+                    if (!P.personMap.containsKey(actors[i])){
+                        P.addPerson(actors[i], name, Person.PersonType.Actor);
+                    }
+                    else{
+                        P.addMovieToPerson(name,actors[i]);
+                    }
+                }
         }
+        
     }
 }
 

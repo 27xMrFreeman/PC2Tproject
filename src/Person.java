@@ -29,9 +29,9 @@ public class Person {
     public void setPersonType(PersonType personType) {
         this.personType = personType;
     }
-    public void addMovieToPerson(String movieName) {
-        this.madeMovies.add(movieName);
-        this.movieCount = movieCount + 1;
+    public void addMovieToPerson(String movieName, String personName) {
+        this.personMap.get(personName).madeMovies.add(movieName);
+        this.personMap.get(personName).movieCount = movieCount + 1;
     }
 
     public void getMadeMovies() {

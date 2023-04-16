@@ -67,6 +67,7 @@ public class App implements Serializable {
                 M.printAllMovies();
                 break;
             case 9:
+                dbConn.saveMovieToDB(M); //funguje ale neukladam herce/anim
                 flag = false;
                 break;
             case 10: //funguje

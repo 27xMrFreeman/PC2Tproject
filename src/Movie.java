@@ -87,6 +87,7 @@ public abstract class Movie implements Serializable {
     //// **IMPLEMENTOVANO V MOVIEMAP**//abstract void saveMovie(HashMap Movies);
    // // **IMPLEMENTOVANO V MOVIEMAP**//abstract void loadMovie(HashMap Movies) throws IOException, ClassNotFoundException, InvalidClassException;
     abstract void printAnimatorOrActor();
+    abstract String [] getAnimatorsOrActors();
 // **IMPLEMENTOVANO V MOVIEMAP**
     // void deleteMovie (HashMap Movies) {
     //     System.out.println("Zadejte jmeno filmu ktery chcete smazat: ");

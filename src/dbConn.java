@@ -78,6 +78,30 @@ public class dbConn{
             prSt.setString(7, scoreCommStr);
             prSt.setString(8, movieType);
             prSt.executeUpdate();
+            
+            
+            int j = 0;
+            String [] People = Mo.getAnimatorsOrActors();
+            query = "CREATE TABLE IF NOT EXISTS people (ID int NOT NULL, name varchar(255), movies varchar(255), PRIMARY KEY(ID))";
+            stmt.execute(query);
+            try {
+                query = "SELECT ID FROM people WHERE ID = (SELECT MAX(ID) FROM people)";
+                ResultSet rs = stmt.executeQuery(query);
+                rs.next();
+                j = rs.getInt("ID") +1;
+            } catch (Exception e) {
+                //e.printStackTrace();
+                System.out.println(i);
+            }
+            for (int k = j; k < People.length; k++) {
+                name = People[k];
+                query = "INSERT INTO people(ID, name, movies) VALUES (?,?,?)";
+                prSt = conn.prepareStatement(query);
+                prSt.setInt(1, k);
+                prSt.setString(2, name);
+                prSt.setString(3, i + ";");
+                prSt.executeUpdate();
+            }
             i++;
         }
     } catch (SQLException e) {

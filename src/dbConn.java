@@ -67,21 +67,71 @@ public class dbConn{
                 //e.printStackTrace();
                 System.out.println(i);
             }
-            query = "INSERT INTO testik(ID, name, director, releaseDate, suggestedAge, score, scoreComment, movieType) VALUES (?,?,?,?,?,?,?,?)";
-            PreparedStatement prSt = conn.prepareStatement(query);
-            prSt.setInt(1, i);
-            prSt.setString(2, name);
-            prSt.setString(3, director);
-            prSt.setInt(4, releaseDate);
-            prSt.setInt(5, suggestedAge);
-            prSt.setString(6, scoreStr);
-            prSt.setString(7, scoreCommStr);
-            prSt.setString(8, movieType);
-            prSt.executeUpdate();
-            
-            
-            int j = 0;
+            int flag;
             String [] People = Mo.getAnimatorsOrActors();
+            try {
+            query = "SELECT * FROM testik WHERE name =" + name;
+            stmt.execute(query);
+            flag = 1;
+            }
+            catch (SQLException eq){
+                flag = 0;
+            }
+            if (flag == 0){
+                query = "INSERT INTO testik(ID, name, director, releaseDate, suggestedAge, score, scoreComment, movieType) VALUES (?,?,?,?,?,?,?,?)";
+                PreparedStatement prSt = conn.prepareStatement(query);
+                prSt.setInt(1, i);
+                prSt.setString(2, name);
+                prSt.setString(3, director);
+                prSt.setInt(4, releaseDate);
+                prSt.setInt(5, suggestedAge);
+                prSt.setString(6, scoreStr);
+                prSt.setString(7, scoreCommStr);
+                prSt.setString(8, movieType);
+                prSt.executeUpdate();
+                
+                
+                
+                PeopleExist(i, conn, People);
+                i++;
+            }
+            else{
+                query = "UPDATE testik SET director= ?, releaseDate= ?, suggestedAge= ?, score= ?, scoreComment= ? WHERE ID = ?";
+                PreparedStatement prSt = conn.prepareStatement(query);
+                prSt.setString(1, director);
+                prSt.setInt(2, releaseDate);
+                prSt.setInt(3, suggestedAge);
+                prSt.setString(4, scoreStr);
+                prSt.setString(5, scoreCommStr);
+                prSt.setInt(6, i);
+                prSt.executeUpdate();
+               
+                PeopleExist(i, conn, People);
+                } 
+                
+            }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }  
+    
+
+    }
+    
+    public static void PeopleExist(int i, Connection conn, String [] People ){
+        int flag;
+        String name = null;
+        try {
+        Statement stmt = conn.createStatement();
+        query = "SELECT * FROM people WHERE name =" + People[i];
+        try { 
+        stmt.execute(query);
+        flag = 1;
+        }
+        catch (SQLException eq){
+            flag = 0;
+        }
+        if (flag == 0){
+            int j = 0;
             query = "CREATE TABLE IF NOT EXISTS people (ID int NOT NULL, name varchar(255), movies varchar(255), PRIMARY KEY(ID))";
             stmt.execute(query);
             try {
@@ -96,20 +146,28 @@ public class dbConn{
             for (int k = j; k < People.length; k++) {
                 name = People[k];
                 query = "INSERT INTO people(ID, name, movies) VALUES (?,?,?)";
-                prSt = conn.prepareStatement(query);
+                PreparedStatement prSt = conn.prepareStatement(query);
                 prSt.setInt(1, k);
                 prSt.setString(2, name);
                 prSt.setString(3, i + ";");
                 prSt.executeUpdate();
             }
-            i++;
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }  
-    
-
+        else {
+            name = People[i];
+            query = "SELECT ID FROM people WHERE name = " + name;
+            ResultSet rs = stmt.executeQuery(query);
+            rs.next();
+            int k = rs.getInt("ID");
+            query = "UPDATE people SET movies = concat(movies, ?) WHERE ID = ?";
+            PreparedStatement prSt = conn.prepareStatement(query);
+            prSt.setString(1, i + ";");
+            prSt.setInt(2, k);
+            prSt.executeUpdate();
+            }    
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
     }
-
-        
 }

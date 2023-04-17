@@ -145,6 +145,7 @@ public class dbConn{
             stmt.execute(query);
             for (int j = 0;j<People.length;j++){
                 query = "SELECT * FROM people WHERE name =" + People[j];
+                System.out.println(People[j]);
                 try { 
                     stmt.execute(query);
                     flag = 1;
@@ -152,6 +153,7 @@ public class dbConn{
                     flag = 0;
                 }
                 if (flag == 0){
+                    System.out.println("rip0");
                     try {
                         query = "SELECT ID FROM people WHERE ID = (SELECT MAX(ID) FROM people)";
                         ResultSet rs = stmt.executeQuery(query);
@@ -171,6 +173,7 @@ public class dbConn{
                         prSt.executeUpdate();
                     }
                 } else {
+                    System.out.println("rip1");
                     query = "SELECT ID FROM people WHERE name = " + People[j];
                     ResultSet rs = stmt.executeQuery(query);
                     rs.next();

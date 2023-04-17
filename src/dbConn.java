@@ -199,7 +199,6 @@ public class dbConn{
             ResultSet rs = stmt.executeQuery(query);
             rs.next();
             int maxID = rs.getInt("ID");
-            System.out.println("maxID is: " + maxID);
             //vsechno v loopu do max ID
             for (int i = 0; i < maxID+1; i++) {
                 query = "SELECT * FROM testik WHERE ID = " + i;
@@ -213,13 +212,11 @@ public class dbConn{
                 String scoreStr = rs.getString("score");
                 String scoreCommStr = rs.getString("scoreComment");
                 String movieType = rs.getString("movieType");
-                System.out.println("name is: " + name);
 
                 query = "SELECT COUNT( * ) FROM people WHERE movies LIKE '%" + i + "%'";
                 rs = stmt.executeQuery(query);
                 rs.next();
                 int count = rs.getInt(1);
-                System.out.println("count is: " + count);
 
                 query = "SELECT name FROM people WHERE movies LIKE '%" + i + "%'";
                 rs = stmt.executeQuery(query);
@@ -227,7 +224,6 @@ public class dbConn{
                 String people [] = new String[count];
                 for (int j = 0; j < count; j++) {
                     people[j] = rs.getString("name");
-                    System.out.println("people in position: "+ i +" is: "+ name);
                     if (movieType == "L") {P.addPerson(people[j], name, Person.PersonType.Actor);}
                     else {P.addPerson(people[j], name, Person.PersonType.Animator);}
                     

@@ -6,12 +6,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.HashMap;
-
-import javax.swing.plaf.metal.MetalBorders.ScrollPaneBorder;
-
-import Person.PersonType;
-
 import java.util.*;
+
 public class dbConn{
     static String url = "jdbc:mysql://127.0.0.1:3306";
     static String username = "user";

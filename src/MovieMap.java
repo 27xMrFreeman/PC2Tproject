@@ -45,7 +45,7 @@ public class MovieMap extends Person {
                 ((AnimatedMovie) Movies.get(name)).sortScore();
                 System.out.println("Jmeno: " + ((AnimatedMovie) Movies.get(name)).getName() + "\nReziser: " +  ((AnimatedMovie) Movies.get(name)).getDirector());
                 System.out.println("Vydano: " + ((AnimatedMovie) Movies.get(name)).getReleaseDate() + "\nAnimatori: " + Arrays.toString(((AnimatedMovie)Movies.get(name)).getAnimatorsOrActors()));
-                System.out.println("Doporuceny vek: " + ((AnimatedMovie) Movies.get(name)).getSuggestedAge() + "\nHodnoceni: " + ((AnimatedMovie) Movies.get(name)).getScoreList());
+                System.out.println("Doporuceny vek: " + ((AnimatedMovie) Movies.get(name)).getSuggestedAge() + "\n");
                 System.out.println("Komentar: " + ((AnimatedMovie) Movies.get(name)).getScoreCommentList());
                 break;
             case "LiveActionMovie":

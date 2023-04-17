@@ -66,7 +66,7 @@ public class AnimatedMovie extends Movie implements Serializable {
             sc.nextLine();
         for (String personName : animators) {
             if(P.personMap.containsKey(personName)){
-                P.personMap.get(personName).addMovieToPerson(name,personName);
+                P.addMovieToPerson(name,personName);
             }
             else {
             P.personMap.put(personName, new Person(personName, name, Person.PersonType.Animator));

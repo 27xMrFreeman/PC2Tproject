@@ -44,7 +44,7 @@ public class LiveActionMovie extends Movie implements Serializable{
             System.out.println(Arrays.toString(actors));
         for (String personName : actors) {
             if(P.personMap.containsKey(personName)){
-                P.personMap.get(personName).addMovieToPerson(name,personName);
+                P.addMovieToPerson(name,personName);
             }
             else {
             P.personMap.put(personName, new Person(personName, name, Person.PersonType.Actor));

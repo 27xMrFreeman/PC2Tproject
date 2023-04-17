@@ -24,17 +24,17 @@ public abstract class Movie implements Serializable {
         this.name = "";
         this.director = "";
         this.releaseDate = 0;
-        this.scoreComment = scoreComment;
-        this.score = score;
+        this.scoreComment.add("-");
+        this.score.add(-1);
 
 
     }
     public Movie(String name, String director, int releaseDate) {
         this.name = name;
         this.director = director;
-        this.scoreComment = scoreComment;
+        this.scoreComment.add("-");
         this.releaseDate = releaseDate;
-        this.score = score;
+        this.score.add(-1);
 
     }
 

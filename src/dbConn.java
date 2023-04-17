@@ -136,26 +136,31 @@ public class dbConn{
     }
         
     public static void PeopleExist(int i, Connection conn, String [] People ){
-        int flag;
+        int flag = 1;
         String name = null;
         try {
             Statement stmt = conn.createStatement();
             query = "CREATE TABLE IF NOT EXISTS people (ID int NOT NULL, name varchar(255), movies varchar(255), PRIMARY KEY(ID))";
             stmt.execute(query);
             for (int j = 0;j<People.length;j++){
-                query = "SELECT * FROM people WHERE name =" + People[j];
+                query = "SELECT name FROM people WHERE name = '" + People[j] + "'";
                 System.out.println(People[j]);
-                try { 
-                    stmt.execute(query);
-                    flag = 1;
-                } catch (SQLException eq){
-                    flag = 0;
-                }
+                ResultSet rs = stmt.executeQuery(query);
+                rs.next();
+                try {rs.getString(1);}
+                catch (SQLException e) {flag = 0;}
+                
+                // try { 
+                //     stmt.execute(query);
+                //     flag = 1;
+                // } catch (SQLException eq){
+                //     flag = 0;
+                // }
                 if (flag == 0){
                     System.out.println("rip0");
                     try {
                         query = "SELECT ID FROM people WHERE ID = (SELECT MAX(ID) FROM people)";
-                        ResultSet rs = stmt.executeQuery(query);
+                        rs = stmt.executeQuery(query);
                         rs.next();
                         j = rs.getInt("ID") +1;
                     } catch (Exception e) {
@@ -173,8 +178,8 @@ public class dbConn{
                     }
                 } else {
                     System.out.println("rip1");
-                    query = "SELECT ID FROM people WHERE name = " + People[j];
-                    ResultSet rs = stmt.executeQuery(query);
+                    query = "SELECT ID FROM people WHERE name = '" + People[j] + "'";
+                    rs = stmt.executeQuery(query);
                     rs.next();
                     int k = rs.getInt("ID");
                     query = "UPDATE people SET movies = CONCAT(movies, ?) WHERE ID = ?";
@@ -246,8 +251,7 @@ public class dbConn{
                 MM.addMovie(M);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Unable to load non-existant database");
+            System.out.println("Unable to use or load non-existant database");
         }
         
 

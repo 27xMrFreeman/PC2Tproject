@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Person {
-    HashMap<String, Person> personMap= new HashMap<>();
+    public HashMap<String, Person> personMap= new HashMap<>();
     private List<String> madeMovies = new ArrayList<String>();
     private int movieCount = 0;
     public enum PersonType{Animator, Actor};
@@ -30,8 +30,8 @@ public class Person {
         this.personType = personType;
     }
     public void addMovieToPerson(String movieName, String personName) {
-        this.personMap.get(personName).madeMovies.add(movieName);
-        this.personMap.get(personName).movieCount = movieCount + 1;
+        personMap.get(personName).madeMovies.add(movieName);
+        personMap.get(personName).movieCount = movieCount + 1;
     }
 
     public void getMadeMovies() {

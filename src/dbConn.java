@@ -12,7 +12,26 @@ public class dbConn{
     static String username = "user";
     static String password = "password";
     static String query;
-//ResultSet resultSet = statement.executeQuery(query); na pozdeji
+
+    static void deleteDatabase(){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try
+        {
+        Connection conn = DriverManager.getConnection(url, username, password);
+        Statement stmt = conn.createStatement();
+        query = "DROP DATABASE test2";
+        stmt.executeUpdate(query);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     public static void saveMovieToDB(MovieMap M) {
         HashMap<String, Movie> Movies = M.Movies;
         try {
@@ -119,49 +138,49 @@ public class dbConn{
         String name = null;
         try {
             Statement stmt = conn.createStatement();
-            query = "SELECT * FROM people WHERE name =" + People[i];
-            try { 
-                stmt.execute(query);
-                flag = 1;
-            } catch (SQLException eq){
-                flag = 0;
-            }
-            if (flag == 0){
-                int j = 0;
-                query = "CREATE TABLE IF NOT EXISTS people (ID int NOT NULL, name varchar(255), movies varchar(255), PRIMARY KEY(ID))";
-                stmt.execute(query);
-                try {
-                    query = "SELECT ID FROM people WHERE ID = (SELECT MAX(ID) FROM people)";
+            query = "CREATE TABLE IF NOT EXISTS people (ID int NOT NULL, name varchar(255), movies varchar(255), PRIMARY KEY(ID))";
+            stmt.execute(query);
+            for (int j = 0;j<People.length;j++){
+                query = "SELECT * FROM people WHERE name =" + People[j];
+                try { 
+                    stmt.execute(query);
+                    flag = 1;
+                } catch (SQLException eq){
+                    flag = 0;
+                }
+                if (flag == 0){
+                    try {
+                        query = "SELECT ID FROM people WHERE ID = (SELECT MAX(ID) FROM people)";
+                        ResultSet rs = stmt.executeQuery(query);
+                        rs.next();
+                        j = rs.getInt("ID") +1;
+                    } catch (Exception e) {
+                        //e.printStackTrace();
+                        System.out.println(i);
+                    }
+                    for (int k = j; k < People.length; k++) {
+                        name = People[k];
+                        query = "INSERT INTO people(ID, name, movies) VALUES (?,?,?)";
+                        PreparedStatement prSt = conn.prepareStatement(query);
+                        prSt.setInt(1, k);
+                        prSt.setString(2, name);
+                        prSt.setString(3, i + ";");
+                        prSt.executeUpdate();
+                    }
+                } else {
+                    query = "SELECT ID FROM people WHERE name = " + People[j];
                     ResultSet rs = stmt.executeQuery(query);
                     rs.next();
-                    j = rs.getInt("ID") +1;
-                } catch (Exception e) {
-                    //e.printStackTrace();
-                    System.out.println(i);
-                }
-                for (int k = j; k < People.length; k++) {
-                    name = People[k];
-                    query = "INSERT INTO people(ID, name, movies) VALUES (?,?,?)";
+                    int k = rs.getInt("ID");
+                    query = "UPDATE people SET movies = CONCAT(movies, ?) WHERE ID = ?";
                     PreparedStatement prSt = conn.prepareStatement(query);
-                    prSt.setInt(1, k);
-                    prSt.setString(2, name);
-                    prSt.setString(3, i + ";");
+                    prSt.setString(1, i + ";");
+                    prSt.setInt(2, k);
                     prSt.executeUpdate();
-                }
-            } else {
-                name = People[i];
-                query = "SELECT ID FROM people WHERE name = " + name;
-                ResultSet rs = stmt.executeQuery(query);
-                rs.next();
-                int k = rs.getInt("ID");
-                query = "UPDATE people SET movies = concat(movies, ?) WHERE ID = ?";
-                PreparedStatement prSt = conn.prepareStatement(query);
-                prSt.setString(1, i + ";");
-                prSt.setInt(2, k);
-                prSt.executeUpdate();
-            }    
+                } 
+            }
         } catch(SQLException e){
-            e.printStackTrace();
+            e.printStackTrace();    
         }
     }
 }

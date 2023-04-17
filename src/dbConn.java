@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.HashMap;
+
+import javax.swing.plaf.metal.MetalBorders.ScrollPaneBorder;
+
 import java.util.*;
 public class dbConn{
     static String url = "jdbc:mysql://127.0.0.1:3306";
@@ -163,5 +166,60 @@ public class dbConn{
         } catch(SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public void loadMovieFromDB(MovieMap MM) {
+        try {
+            Connection conn = DriverManager.getConnection(url, username, password);
+            query = "SELECT ID FROM testik WHERE ID = (SELECT MAX(ID) FROM testik)";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            rs.next();
+            int maxID = rs.getInt("ID");
+            //vsechno v loopu do max ID
+            for (int i = 0; i < maxID; i++) {
+                query = "SELECT * FROM testik WHERE ID = " + i;
+                rs = stmt.executeQuery(query);
+                rs.next();
+                int ID = rs.getInt("ID");
+                String name = rs.getString("name");
+                String director = rs.getString("director");
+                int releaseDate = rs.getInt("releaseDate");
+                int suggestedAge = rs.getInt("suggestedAge");
+                String scoreStr = rs.getString("score");
+                String scoreCommStr = rs.getString("scoreComment");
+                String movieType = rs.getString("movieType");
+
+                query = "SELECT COUNT (*) FROM people WHERE movies LIKE '%" + i + "%'";
+                rs = stmt.executeQuery(query);
+                rs.next();
+                int count = rs.getInt(1);
+
+                query = "SELECT * FROM people WHERE movies LIKE '%" + i + "%'";
+                rs = stmt.executeQuery(query);
+                rs.next();
+                String [] people = null;
+                for (int j = 0; j < count; j++) {
+                    people[j] = rs.getString(2);
+                } 
+                
+                Movie M;
+                if (movieType == "L") {M = new LiveActionMovie(name, director, people, releaseDate);}
+                else {M = new AnimatedMovie(name, director, people, releaseDate, suggestedAge);}
+                
+                int []score = Arrays.stream(scoreStr.split(";")).mapToInt(Integer::parseInt).toArray();
+                String [] scoreComment = scoreCommStr.split(";");
+                for (int j = 0; j < score.length; j++) {
+                    M.setScore(score[j],j);
+                    M.setScoreComment(scoreComment[j], j);
+                }
+
+                MM.addMovie(M);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+
     }
 }

@@ -14,159 +14,153 @@ public class dbConn{
     static String query;
 //ResultSet resultSet = statement.executeQuery(query); na pozdeji
     public static void saveMovieToDB(MovieMap M) {
-    HashMap<String, Movie> Movies = M.Movies;
-    try {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    try {
-        int i = 0;
-        query = "CREATE DATABASE IF NOT EXISTS test2";
-        Connection conn = DriverManager.getConnection(url, username, password);
-        Statement stmt = conn.createStatement();
-        stmt.execute(query);
-        query = "USE test2";
-        stmt.execute(query);
-        query = "CREATE TABLE IF NOT EXISTS testik (ID int NOT NULL, name varchar(255), director varchar(255), releaseDate int, suggestedAge int, score varchar(255), scoreComment varchar(1000), movieType varchar(255), PRIMARY KEY(ID))";
-        stmt.execute(query);
-        Set <String> keys = Movies.keySet();
-        for (String key : keys) {
-            Movie Mo = Movies.get(key);
-            String name = Mo.getName();
-            System.out.println(name);
-            String director = Mo.getDirector();
-            int releaseDate = Mo.getReleaseDate();
-            List<Integer> score = Mo.getScoreList();
-            int suggestedAge = 0;
-            String movieType = null;
-            try {
-                suggestedAge = ((AnimatedMovie) Mo).getSuggestedAge();
-                movieType = "A";
-            }
-            catch (Exception e) {
-                suggestedAge = 0;
-                movieType = "L";
-            }
-            String scoreStr = new String();
-            String scoreCommStr = new String();
-            for (int j = 0; j < score.size(); j++) {
-                scoreStr += score.get(j) + ";"; 
-            }
-            List<String> scoreComment = Movies.get(key).getScoreCommentList();
-            for (int j = 0; j < scoreComment.size(); j++) {
-                scoreCommStr += scoreComment.get(j) + ";"; 
-            }
-            System.out.println(director);
-            try {
-                query = "SELECT ID FROM testik WHERE ID = (SELECT MAX(ID) FROM testik)";
-                ResultSet rs = stmt.executeQuery(query);
-                rs.next();
-                i = rs.getInt("ID") +1;
-            } catch (Exception e) {
-                //e.printStackTrace();
-                System.out.println(i);
-            }
-            int flag;
-            String [] People = Mo.getAnimatorsOrActors();
-            try {
-            query = "SELECT * FROM testik WHERE name =" + name;
+        HashMap<String, Movie> Movies = M.Movies;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            int i = 0;
+            query = "CREATE DATABASE IF NOT EXISTS test2";
+            Connection conn = DriverManager.getConnection(url, username, password);
+            Statement stmt = conn.createStatement();
             stmt.execute(query);
-            flag = 1;
-            }
-            catch (SQLException eq){
-                flag = 0;
-            }
-            if (flag == 0){
-                query = "INSERT INTO testik(ID, name, director, releaseDate, suggestedAge, score, scoreComment, movieType) VALUES (?,?,?,?,?,?,?,?)";
-                PreparedStatement prSt = conn.prepareStatement(query);
-                prSt.setInt(1, i);
-                prSt.setString(2, name);
-                prSt.setString(3, director);
-                prSt.setInt(4, releaseDate);
-                prSt.setInt(5, suggestedAge);
-                prSt.setString(6, scoreStr);
-                prSt.setString(7, scoreCommStr);
-                prSt.setString(8, movieType);
-                prSt.executeUpdate();
+            query = "USE test2";
+            stmt.execute(query);
+            query = "CREATE TABLE IF NOT EXISTS testik (ID int NOT NULL, name varchar(255), director varchar(255), releaseDate int, suggestedAge int, score varchar(255), scoreComment varchar(1000), movieType varchar(255), PRIMARY KEY(ID))";
+            stmt.execute(query);
+            Set <String> keys = Movies.keySet();
+            for (String key : keys) {
+                Movie Mo = Movies.get(key);
+                String name = Mo.getName();
+                System.out.println(name);
+                String director = Mo.getDirector();
+                int releaseDate = Mo.getReleaseDate();
+                List<Integer> score = Mo.getScoreList();
+                int suggestedAge = 0;
+                String movieType = null;
+                try {
+                    suggestedAge = ((AnimatedMovie) Mo).getSuggestedAge();
+                    movieType = "A";
+                }
+                catch (Exception e) {
+                    suggestedAge = 0;
+                    movieType = "L";
+                }
+                String scoreStr = new String();
+                String scoreCommStr = new String();
+                for (int j = 0; j < score.size(); j++) {
+                    scoreStr += score.get(j) + ";"; 
+                }
+                List<String> scoreComment = Movies.get(key).getScoreCommentList();
+                for (int j = 0; j < scoreComment.size(); j++) {
+                    scoreCommStr += scoreComment.get(j) + ";"; 
+                }
+                System.out.println(director);
+                try {
+                    query = "SELECT ID FROM testik WHERE ID = (SELECT MAX(ID) FROM testik)";
+                    ResultSet rs = stmt.executeQuery(query);
+                    rs.next();
+                    i = rs.getInt("ID") +1;
+                } catch (Exception e) {
+                    //e.printStackTrace();
+                    System.out.println(i);
+                }
+                int flag;
+                String [] People = Mo.getAnimatorsOrActors();
+                try {
+                query = "SELECT * FROM testik WHERE name =" + name;
+                stmt.execute(query);
+                flag = 1;
+                }
+                catch (SQLException eq) {
+                    flag = 0;
+                }
+                if (flag == 0) {
+                    query = "INSERT INTO testik(ID, name, director, releaseDate, suggestedAge, score, scoreComment, movieType) VALUES (?,?,?,?,?,?,?,?)";
+                    PreparedStatement prSt = conn.prepareStatement(query);
+                    prSt.setInt(1, i);
+                    prSt.setString(2, name);
+                    prSt.setString(3, director);
+                    prSt.setInt(4, releaseDate);
+                    prSt.setInt(5, suggestedAge);
+                    prSt.setString(6, scoreStr);
+                    prSt.setString(7, scoreCommStr);
+                    prSt.setString(8, movieType);
+                    prSt.executeUpdate();
+                    
+                    
+                    
+                    PeopleExist(i, conn, People);
+                    i++;
+                }
+                else {
+                    query = "UPDATE testik SET director= ?, releaseDate= ?, suggestedAge= ?, score= ?, scoreComment= ? WHERE ID = ?";
+                    PreparedStatement prSt = conn.prepareStatement(query);
+                    prSt.setString(1, director);
+                    prSt.setInt(2, releaseDate);
+                    prSt.setInt(3, suggestedAge);
+                    prSt.setString(4, scoreStr);
+                    prSt.setString(5, scoreCommStr);
+                    prSt.setInt(6, i);
+                    prSt.executeUpdate();
                 
-                
-                
-                PeopleExist(i, conn, People);
-                i++;
-            }
-            else{
-                query = "UPDATE testik SET director= ?, releaseDate= ?, suggestedAge= ?, score= ?, scoreComment= ? WHERE ID = ?";
-                PreparedStatement prSt = conn.prepareStatement(query);
-                prSt.setString(1, director);
-                prSt.setInt(2, releaseDate);
-                prSt.setInt(3, suggestedAge);
-                prSt.setString(4, scoreStr);
-                prSt.setString(5, scoreCommStr);
-                prSt.setInt(6, i);
-                prSt.executeUpdate();
-               
-                PeopleExist(i, conn, People);
+                    PeopleExist(i, conn, People);
                 } 
-                
             }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }  
-    
-
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }  
     }
-    
+        
     public static void PeopleExist(int i, Connection conn, String [] People ){
         int flag;
         String name = null;
         try {
-        Statement stmt = conn.createStatement();
-        query = "SELECT * FROM people WHERE name =" + People[i];
-        try { 
-        stmt.execute(query);
-        flag = 1;
-        }
-        catch (SQLException eq){
-            flag = 0;
-        }
-        if (flag == 0){
-            int j = 0;
-            query = "CREATE TABLE IF NOT EXISTS people (ID int NOT NULL, name varchar(255), movies varchar(255), PRIMARY KEY(ID))";
-            stmt.execute(query);
-            try {
-                query = "SELECT ID FROM people WHERE ID = (SELECT MAX(ID) FROM people)";
+            Statement stmt = conn.createStatement();
+            query = "SELECT * FROM people WHERE name =" + People[i];
+            try { 
+                stmt.execute(query);
+                flag = 1;
+            } catch (SQLException eq){
+                flag = 0;
+            }
+            if (flag == 0){
+                int j = 0;
+                query = "CREATE TABLE IF NOT EXISTS people (ID int NOT NULL, name varchar(255), movies varchar(255), PRIMARY KEY(ID))";
+                stmt.execute(query);
+                try {
+                    query = "SELECT ID FROM people WHERE ID = (SELECT MAX(ID) FROM people)";
+                    ResultSet rs = stmt.executeQuery(query);
+                    rs.next();
+                    j = rs.getInt("ID") +1;
+                } catch (Exception e) {
+                    //e.printStackTrace();
+                    System.out.println(i);
+                }
+                for (int k = j; k < People.length; k++) {
+                    name = People[k];
+                    query = "INSERT INTO people(ID, name, movies) VALUES (?,?,?)";
+                    PreparedStatement prSt = conn.prepareStatement(query);
+                    prSt.setInt(1, k);
+                    prSt.setString(2, name);
+                    prSt.setString(3, i + ";");
+                    prSt.executeUpdate();
+                }
+            } else {
+                name = People[i];
+                query = "SELECT ID FROM people WHERE name = " + name;
                 ResultSet rs = stmt.executeQuery(query);
                 rs.next();
-                j = rs.getInt("ID") +1;
-            } catch (Exception e) {
-                //e.printStackTrace();
-                System.out.println(i);
-            }
-            for (int k = j; k < People.length; k++) {
-                name = People[k];
-                query = "INSERT INTO people(ID, name, movies) VALUES (?,?,?)";
+                int k = rs.getInt("ID");
+                query = "UPDATE people SET movies = concat(movies, ?) WHERE ID = ?";
                 PreparedStatement prSt = conn.prepareStatement(query);
-                prSt.setInt(1, k);
-                prSt.setString(2, name);
-                prSt.setString(3, i + ";");
+                prSt.setString(1, i + ";");
+                prSt.setInt(2, k);
                 prSt.executeUpdate();
-            }
-        }
-        else {
-            name = People[i];
-            query = "SELECT ID FROM people WHERE name = " + name;
-            ResultSet rs = stmt.executeQuery(query);
-            rs.next();
-            int k = rs.getInt("ID");
-            query = "UPDATE people SET movies = concat(movies, ?) WHERE ID = ?";
-            PreparedStatement prSt = conn.prepareStatement(query);
-            prSt.setString(1, i + ";");
-            prSt.setInt(2, k);
-            prSt.executeUpdate();
             }    
-        }
-        catch(SQLException e){
+        } catch(SQLException e){
             e.printStackTrace();
         }
     }

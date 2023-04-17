@@ -15,7 +15,8 @@ public class App implements Serializable {
         Movie LA = null;
         Movie AN = null;
         MovieMap M = new MovieMap();
-        dbConn.deleteDatabase();
+        dbConn.loadMovieFromDB(M);
+        //dbConn.deleteDatabase();
         while(flag ==true){
         System.out.println("1: add 2: edit 3: hodnoceni 4: ulozit do souboru 5: nacist ze souboru 6: smazat film 7: vypsat vsechny filmy 8: vyhledat film 9: konec 10: vypsat filmy podle herce/animatora 11: vypsat herce/animatory s vice filmy");
         ans = sc.nextInt(); 

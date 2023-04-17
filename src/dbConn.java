@@ -31,7 +31,7 @@ public class dbConn{
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println("Unable to drop non-existant database");
         }
     }
 
@@ -73,7 +73,8 @@ public class dbConn{
                 String scoreStr = new String();
                 String scoreCommStr = new String();
                 for (int j = 0; j < score.size(); j++) {
-                    scoreStr += score.get(j) + ";"; 
+                    if(score.get(j) == null) {scoreStr += -1 + ";";}
+                    else scoreStr += score.get(j) + ";"; 
                 }
                 List<String> scoreComment = Movies.get(key).getScoreCommentList();
                 for (int j = 0; j < scoreComment.size(); j++) {
@@ -190,16 +191,19 @@ public class dbConn{
         }
     }
 
-    public void loadMovieFromDB(MovieMap MM) {
+    public static void loadMovieFromDB(MovieMap MM) {
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
-            query = "SELECT ID FROM testik WHERE ID = (SELECT MAX(ID) FROM testik)";
             Statement stmt = conn.createStatement();
+            query = "USE test2";
+            stmt.execute(query);
+            query = "SELECT ID FROM testik WHERE ID = (SELECT MAX(ID) FROM testik)";
             ResultSet rs = stmt.executeQuery(query);
             rs.next();
             int maxID = rs.getInt("ID");
+            System.out.println("maxID is: " + maxID);
             //vsechno v loopu do max ID
-            for (int i = 0; i < maxID; i++) {
+            for (int i = 0; i < maxID+1; i++) {
                 query = "SELECT * FROM testik WHERE ID = " + i;
                 rs = stmt.executeQuery(query);
                 rs.next();
@@ -211,18 +215,21 @@ public class dbConn{
                 String scoreStr = rs.getString("score");
                 String scoreCommStr = rs.getString("scoreComment");
                 String movieType = rs.getString("movieType");
+                System.out.println("name is: " + name);
 
-                query = "SELECT COUNT (*) FROM people WHERE movies LIKE '%" + i + "%'";
+                query = "SELECT COUNT( * ) FROM people WHERE movies LIKE '%" + i + "%'";
                 rs = stmt.executeQuery(query);
                 rs.next();
                 int count = rs.getInt(1);
+                System.out.println("count is: " + count);
 
-                query = "SELECT * FROM people WHERE movies LIKE '%" + i + "%'";
+                query = "SELECT name FROM people WHERE movies LIKE '%" + i + "%'";
                 rs = stmt.executeQuery(query);
                 rs.next();
-                String [] people = null;
+                String people [] = new String[count];
                 for (int j = 0; j < count; j++) {
-                    people[j] = rs.getString(2);
+                    people[j] = rs.getString("name");
+                    System.out.println("people in position: "+ i +" is: "+ name);
                 } 
                 
                 Movie M;
@@ -232,14 +239,17 @@ public class dbConn{
                 int []score = Arrays.stream(scoreStr.split(";")).mapToInt(Integer::parseInt).toArray();
                 String [] scoreComment = scoreCommStr.split(";");
                 for (int j = 0; j < score.length; j++) {
-                    M.setScore(score[j],j);
-                    M.setScoreComment(scoreComment[j], j);
+                    if (score[j] != -1) {
+                        M.setScore(score[j],j);
+                        M.setScoreComment(scoreComment[j], j);
+                    }
                 }
 
                 MM.addMovie(M);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Unable to load non-existant database");
         }
         
 

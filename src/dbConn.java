@@ -187,7 +187,7 @@ public class dbConn{
         }
     }
 
-    public void loadMovieFromDB(MovieMap MM) {
+    public static void loadMovieFromDB(MovieMap MM) {
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
             query = "SELECT ID FROM testik WHERE ID = (SELECT MAX(ID) FROM testik)";

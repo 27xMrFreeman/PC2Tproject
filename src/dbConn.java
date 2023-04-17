@@ -9,6 +9,8 @@ import java.util.HashMap;
 
 import javax.swing.plaf.metal.MetalBorders.ScrollPaneBorder;
 
+import Person.PersonType;
+
 import java.util.*;
 public class dbConn{
     static String url = "jdbc:mysql://127.0.0.1:3306";
@@ -191,7 +193,7 @@ public class dbConn{
         }
     }
 
-    public static void loadMovieFromDB(MovieMap MM) {
+    public static void loadMovieFromDB(MovieMap MM, Person P) {
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
             Statement stmt = conn.createStatement();
@@ -230,6 +232,9 @@ public class dbConn{
                 for (int j = 0; j < count; j++) {
                     people[j] = rs.getString("name");
                     System.out.println("people in position: "+ i +" is: "+ name);
+                    if (movieType == "L") {P.addPerson(people[j], name, Person.PersonType.Actor);}
+                    else {P.addPerson(people[j], name, Person.PersonType.Animator);}
+                    
                 } 
                 
                 Movie M;
@@ -245,6 +250,7 @@ public class dbConn{
                     }
                 }
 
+                
                 MM.addMovie(M);
             }
         } catch (SQLException e) {

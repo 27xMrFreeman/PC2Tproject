@@ -1,9 +1,5 @@
 import java.util.Scanner;
 import java.io.Serializable;
-import java.util.Set;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Iterator;
 
 public class App implements Serializable {
     public static void main(String[] args) throws Exception {
@@ -21,7 +17,7 @@ public class App implements Serializable {
         System.out.println("1: add 2: edit 3: hodnoceni 4: ulozit do souboru 5: nacist ze souboru 6: smazat film 7: vypsat vsechny filmy 8: vyhledat film 9: konec 10: vypsat filmy podle herce/animatora 11: vypsat herce/animatory s vice filmy");
         ans = sc.nextInt(); 
         switch(ans){
-            case 1: //funguje
+            case 1: 
                 System.out.println("Zadejte typ filmu hrany/animovany");
                 sc.nextLine();
                 String type = sc.next();
@@ -39,10 +35,10 @@ public class App implements Serializable {
                     default: System.out.println("Invalid choice");
                 }
                 break;
-            case 2: //funguje
+            case 2: 
                 M.editMovie(P);
                 break;
-            case 8: //funguje
+            case 8: 
                 System.out.println("Zadejte jmeno filmu pro vypsani: ");
                 sc.nextLine();
                 String name = sc.nextLine();
@@ -53,26 +49,26 @@ public class App implements Serializable {
                     System.out.println("Movie doesn't exist");
                 }
                 break;
-            case 3: //funguje
+            case 3: 
                 M.addScore();
                 break;
-            case 4: //funguje
+            case 4: 
                 M.saveMovie();
                 break;
-            case 5: //funguje
+            case 5: 
                 M.loadMovie(P);
                 break;
-            case 6: //funguje
+            case 6: 
                 M.deleteMovie();
                 break;
-            case 7: //funguje
+            case 7: 
                 M.printAllMovies();
                 break;
             case 9:
-                dbConn.saveMovieToDB(M); //funguje ale neukladam herce/anim
+                dbConn.saveMovieToDB(M);
                 flag = false;
                 break;
-            case 10: //funguje
+            case 10:
                 P.getMadeMovies();
                 sc.nextLine();
                 break;

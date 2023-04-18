@@ -1,13 +1,7 @@
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.lang.*;
-import java.io.*;
-import java.util.Set;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-public class LiveActionMovie extends Movie implements Serializable{
+public class LiveActionMovie extends Movie{
     private static final long serialVersionUID = 6529685098267757690L;
     String actors [];
     transient Scanner sc = new Scanner(System.in);
@@ -30,7 +24,6 @@ public class LiveActionMovie extends Movie implements Serializable{
     
     
     LiveActionMovie createMovie(Person P) {
-        int i = 0;
         System.out.println("Zadejte jmeno filmu");
             name = sc.nextLine();
         System.out.println("Zadejte jmeno rezisera");
@@ -54,14 +47,11 @@ public class LiveActionMovie extends Movie implements Serializable{
         return LA;
     }
 
-    void editMovie(Person P, String name, HashMap Movies) {
-        // System.out.println("Zadejte jmeno filmu na upravu: ");
-        // String name = sc.nextLine();
+    void editMovie(Person P, String name, HashMap<String, Movie> Movies) {
         String new_name = name;
         boolean flag = true;
-        int i = 0;
         while (flag == true) {
-        System.out.println("Zadejte co si prejete upravit:  1: Nazev 2: Reziser 3: Rok vydani 4: Seznam animatoru 5: Doporuceny vek 6: Konec editace");
+        System.out.println("Zadejte co si prejete upravit:  1: Nazev 2: Reziser 3: Rok vydani 4: Seznam hercu 6: Konec editace");
         int ans;
         switch (ans = sc.nextInt()) {
             case 1:
@@ -95,34 +85,4 @@ public class LiveActionMovie extends Movie implements Serializable{
         }
     }
 
-// **IMPLEMENTOVANO V MOVIEMAP**
-    // void printMovie(String name, HashMap Movies){
-    //     // try catch chybi - NullPointerException
-    //     System.out.println("Jmeno: " + Movies.get(name).getName() + "\nReziser: " +  Movies.get(name).getDirector());
-    //     System.out.println("Vydano: " + Movies.get(name).getReleaseDate() + "\nHerci: " + Arrays.toString(((LiveActionMovie)Movies.get(name)).getAnimatorsOrActors()));
-    //     System.out.println("Hodnoceni: " + Movies.get(name).getScoreList());
-    //     System.out.println("Komentar: " + Movies.get(name).getScoreCommentList());
-    // }
-
-    void printAnimatorOrActor(){  //CHYBI DOIMPLEMENTOVAT
-        System.out.println("Zadejte jmeno animatora pro vypsani: ");
-        String name = sc.nextLine(); 
-    }
-// **IMPLEMENTOVANO V MOVIEMAP**
-    // public void addScore() {
-        
-    //     System.out.println("Zadejte bodove hodnoceni: ");
-    //     Movies.get(name).score.add(sc.nextInt());
-    //     sc.nextLine();
-    //     System.out.println("Prejete si zadat komentar?: y/n");
-    //     switch(sc.nextLine()){
-    //         case "y":
-    //             System.out.println("Zadejte komentar: ");
-    //             Movies.get(name).scoreComment.add(sc.nextLine());
-    //             break;
-    //         case "n":
-    //             Movies.get(name).scoreComment.add("-");
-    //             break;
-    //     }
-    // }
 }

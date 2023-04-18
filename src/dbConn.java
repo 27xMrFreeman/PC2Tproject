@@ -1,4 +1,3 @@
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
@@ -83,7 +82,6 @@ public class dbConn{
                     rs.next();
                     i = rs.getInt("ID") +1;
                 } catch (Exception e) {
-                    //e.printStackTrace();
                 }
                 int flag;
                 String [] People = Mo.getAnimatorsOrActors();
@@ -134,7 +132,6 @@ public class dbConn{
         
     public static void PeopleExist(int i, Connection conn, String [] People ){
         int flag = 1;
-        String name = null;
         try {
             Statement stmt = conn.createStatement();
             query = "CREATE TABLE IF NOT EXISTS people (ID int NOT NULL, name varchar(255), movies varchar(255), PRIMARY KEY(ID))";
@@ -154,7 +151,6 @@ public class dbConn{
                         rs.next();
                         maxID = rs.getInt("ID") +1;
                     } catch (Exception e) {
-                        //e.printStackTrace();
                     }
                     query = "INSERT INTO people(ID, name, movies) VALUES (?,?,?)";
                     PreparedStatement prSt = conn.prepareStatement(query);

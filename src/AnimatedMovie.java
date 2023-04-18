@@ -1,18 +1,11 @@
 import java.util.Scanner;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.lang.*;
-import java.io.*;
-import java.util.Set;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 
 
 
-public class AnimatedMovie extends Movie implements Serializable {
+public class AnimatedMovie extends Movie{
     private static final long serialVersionUID = 6529685098267757690L;
     int suggestedAge;
     String animators [];
@@ -49,7 +42,6 @@ public class AnimatedMovie extends Movie implements Serializable {
         return animators;
     }
     AnimatedMovie createMovie(Person P) {
-        int i = 0;
         System.out.println("Zadejte jmeno filmu");
             name = sc.nextLine();
         System.out.println("Zadejte jmeno rezisera");
@@ -60,7 +52,6 @@ public class AnimatedMovie extends Movie implements Serializable {
         System.out.println("Zadejte seznam animatoru, oddelene carkou a mezerou"); 
             String buffer = sc.nextLine();
             animators = buffer.split(", ");
-            System.out.println(Arrays.toString(animators)); //pouze pro debugging, smazat před odevzdáním
         System.out.println("Zadejte doporuceny vek ");
             suggestedAge = sc.nextInt();
             sc.nextLine();
@@ -76,13 +67,9 @@ public class AnimatedMovie extends Movie implements Serializable {
         return AN;
     }
 
-    void editMovie(Person P, String name, HashMap Movies) {
-        // System.out.println("Zadejte jmeno filmu na upravu: ");
-        // String name = sc.nextLine();
+    void editMovie(Person P, String name, HashMap<String, Movie> Movies) {
         String new_name = name;
-
         boolean flag = true;
-        int i = 0;
         while (flag == true) {
         System.out.println("Zadejte co si prejete upravit:  1: Nazev 2: Reziser 3: Rok vydani 4: Seznam animatoru 5: Doporuceny vek 6: Konec editace");
         int ans;
@@ -130,49 +117,5 @@ public class AnimatedMovie extends Movie implements Serializable {
         }
         }
     }
-// **IMPLEMENTOVANO V MOVIEMAP**
-    // void printMovie(String name){
-    //     Movies.get(name).sortScore();
-    //     // try catch chybi - NullPointerException
-    //     System.out.println("Jmeno: " + Movies.get(name).getName() + "\nReziser: " +  Movies.get(name).getDirector());
-    //     System.out.println("Vydano: " + Movies.get(name).getReleaseDate() + "\nAnimatori: " + Arrays.toString(((AnimatedMovie)Movies.get(name)).getAnimatorsOrActors()));
-    //     System.out.println("Doporuceny vek: " + ((AnimatedMovie) Movies.get(name)).getSuggestedAge() + "\nHodnoceni: " + Movies.get(name).getScoreList());
-    //     System.out.println("Komentar: " + Movies.get(name).getScoreCommentList());
-    // }
- 
-
-    // void loadMovie(HashMap Movies) throws IOException, ClassNotFoundException{
-    //     System.out.println("Zadejte jmeno filmu pro nacteni: ");
-    //     String name = sc.nextLine();
-    //     FileInputStream fis =new FileInputStream(name + ".data");
-    //     ObjectInputStream ois =new ObjectInputStream(fis);
-    //     AnimatedMovie M = (AnimatedMovie)ois.readObject();
-    //     fis.close();
-    //     Movies.put(name, M);
-    // }
-
-    void printAnimatorOrActor(){
-        System.out.println("Zadejte jmeno animatora pro vypsani: ");
-        String name = sc.nextLine(); 
-    }
-
-// **IMPLEMENTOVANO V MOVIEMAP**
-    // public void addScore(HashMap Movies) {
-    //     System.out.println("Jmeno filmu kam chcete pridat hodnoceni: ");
-    //     String name = sc.nextLine();
-    //     System.out.println("Zadejte bodove hodnoceni 1-10: ");
-    //     ((AnimatedMovie) Movies.get(name)).score.add(sc.nextInt());
-    //     sc.nextLine();
-    //     System.out.println("Prejete si zadat komentar?: y/n");
-    //     switch(sc.nextLine()){
-    //         case "y":
-    //             System.out.println("Zadejte komentar: ");
-    //             ((AnimatedMovie) Movies.get(name)).scoreComment.add(sc.nextLine());
-    //             break;
-    //         case "n":
-    //             ((AnimatedMovie) Movies.get(name)).scoreComment.add("-");
-    //             break;
-    //     }
-    // }
 }
     

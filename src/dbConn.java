@@ -54,7 +54,7 @@ public class dbConn{
             for (String key : keys) {
                 Movie Mo = Movies.get(key);
                 String name = Mo.getName();
-                System.out.println(name);
+                System.out.println("jmeno filmu je: " + name); //debug
                 String director = Mo.getDirector();
                 int releaseDate = Mo.getReleaseDate();
                 List<Integer> score = Mo.getScoreList();
@@ -78,7 +78,6 @@ public class dbConn{
                 for (int j = 0; j < scoreComment.size(); j++) {
                     scoreCommStr += scoreComment.get(j) + ";"; 
                 }
-                System.out.println(director);
                 try {
                     query = "SELECT ID FROM testik WHERE ID = (SELECT MAX(ID) FROM testik)";
                     ResultSet rs = stmt.executeQuery(query);
@@ -144,7 +143,7 @@ public class dbConn{
             stmt.execute(query);
             for (int j = 0;j<People.length;j++){
                 query = "SELECT name FROM people WHERE name = '" + People[j] + "'";
-                System.out.println(People[j]);
+                System.out.println("select statement na jmeno cloveka: " + People[j]);
                 ResultSet rs = stmt.executeQuery(query);
                 rs.next();
                 try {rs.getString(1);}
@@ -157,31 +156,34 @@ public class dbConn{
                 //     flag = 0;
                 // }
                 if (flag == 0){
-                    System.out.println("rip0");
+                    System.out.println("flag je " + flag); //debug
+                    int maxID = 0;
                     try {
                         query = "SELECT ID FROM people WHERE ID = (SELECT MAX(ID) FROM people)";
                         rs = stmt.executeQuery(query);
                         rs.next();
-                        j = rs.getInt("ID") +1;
+                        maxID = rs.getInt("ID") +1;
+                        System.out.println("maxID je " + maxID); //debug
+                        System.out.println("people.length je " + People.length); //debug
                     } catch (Exception e) {
                         //e.printStackTrace();
-                        System.out.println(i);
+                        System.out.println("catch" + i); //debug
                     }
-                    for (int k = j; k < People.length; k++) {
-                        name = People[k];
-                        query = "INSERT INTO people(ID, name, movies) VALUES (?,?,?)";
-                        PreparedStatement prSt = conn.prepareStatement(query);
-                        prSt.setInt(1, k);
-                        prSt.setString(2, name);
-                        prSt.setString(3, i + ";");
-                        prSt.executeUpdate();
-                    }
+                    System.out.println("insertuju name " + People[j]); //debug
+                    query = "INSERT INTO people(ID, name, movies) VALUES (?,?,?)";
+                    PreparedStatement prSt = conn.prepareStatement(query);
+                    prSt.setInt(1, maxID);
+                    prSt.setString(2, People[j]);
+                    prSt.setString(3, i + ";");
+                    prSt.executeUpdate();
                 } else {
-                    System.out.println("rip1");
+                    System.out.println("flag je " + flag); //debug
                     query = "SELECT ID FROM people WHERE name = '" + People[j] + "'";
+                    System.out.println("update name " + People[j]); //debug
                     rs = stmt.executeQuery(query);
                     rs.next();
                     int k = rs.getInt("ID");
+                    System.out.println("k je " + k); //debug
                     query = "UPDATE people SET movies = CONCAT(movies, ?) WHERE ID = ?";
                     PreparedStatement prSt = conn.prepareStatement(query);
                     prSt.setString(1, i + ";");

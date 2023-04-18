@@ -154,7 +154,7 @@ public class dbConn{
                         rs.next();
                         maxID = rs.getInt("ID") +1;
                     } catch (Exception e) {
-                        //e.printStackTrace();
+                        e.printStackTrace();
                     }
                     query = "INSERT INTO people(ID, name, movies) VALUES (?,?,?)";
                     PreparedStatement prSt = conn.prepareStatement(query);

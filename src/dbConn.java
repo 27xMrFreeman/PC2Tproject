@@ -83,7 +83,7 @@ public class dbConn{
                     rs.next();
                     i = rs.getInt("ID") +1;
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
                 int flag;
                 String [] People = Mo.getAnimatorsOrActors();
@@ -154,7 +154,7 @@ public class dbConn{
                         rs.next();
                         maxID = rs.getInt("ID") +1;
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
                     }
                     query = "INSERT INTO people(ID, name, movies) VALUES (?,?,?)";
                     PreparedStatement prSt = conn.prepareStatement(query);

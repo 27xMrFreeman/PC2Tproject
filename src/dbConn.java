@@ -196,6 +196,7 @@ public class dbConn{
 
     public static void loadMovieFromDB(MovieMap MM, Person P) {
         try {
+            Person flag = null;
             Connection conn = DriverManager.getConnection(url, username, password);
             Statement stmt = conn.createStatement();
             query = "USE test2";
@@ -218,24 +219,32 @@ public class dbConn{
                 String scoreCommStr = rs.getString("scoreComment");
                 String movieType = rs.getString("movieType");
 
-                query = "SELECT COUNT( * ) FROM people WHERE movies LIKE '%" + i + "%'";
+                query = "SELECT COUNT( * ) FROM people WHERE movies LIKE '%" + i + ";%'";
                 rs = stmt.executeQuery(query);
                 rs.next();
                 int count = rs.getInt(1);
 
-                query = "SELECT name FROM people WHERE movies LIKE '%" + i + "%'";
+                query = "SELECT name FROM people WHERE movies LIKE '%" + i + ";%'";
                 rs = stmt.executeQuery(query);
                 rs.next();
                 String people [] = new String[count];
                 for (int j = 0; j < count; j++) {
-                    people[j] = rs.getString("name");
-                    if (movieType == "L") {P.addPerson(people[j], name, Person.PersonType.Actor);}
-                    else {P.addPerson(people[j], name, Person.PersonType.Animator);}
+                    people[j] = rs.getString(1);
+                    rs.next();
+                    flag = P.personMap.get(people[j]);
+                    if (movieType == "L") {
+                        if (flag != null) {P.addMovieToPerson(name, people[j]);}
+                        else P.addPerson(people[j], name, Person.PersonType.Actor);
+                    }
+                    else {
+                        if (flag != null) {P.addMovieToPerson(name, people[j]);}
+                        else P.addPerson(people[j], name, Person.PersonType.Animator);
+                    }
                     
                 } 
                 
                 Movie M;
-                if (movieType == "L") {M = new LiveActionMovie(name, director, people, releaseDate);}
+                if (movieType.equals("L")) {M = new LiveActionMovie(name, director, people, releaseDate);}
                 else {M = new AnimatedMovie(name, director, people, releaseDate, suggestedAge);}
                 
                 int []score = Arrays.stream(scoreStr.split(";")).mapToInt(Integer::parseInt).toArray();

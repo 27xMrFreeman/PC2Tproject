@@ -30,8 +30,8 @@ public class Person {
         this.personType = personType;
     }
     public void addMovieToPerson(String movieName, String personName) {
-        personMap.get(personName).madeMovies.add(movieName);
-        personMap.get(personName).movieCount = movieCount + 1;
+        this.personMap.get(personName).madeMovies.add(movieName);
+        this.personMap.get(personName).movieCount = movieCount + 1;
     }
 
     public void getMadeMovies() {
